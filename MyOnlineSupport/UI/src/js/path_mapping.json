@@ -277,6 +277,19 @@
         "cdnPath": "proj4js/dist/proj4"
       }
     },
+    
+    "trumbowyg": {
+     "cdn": "3rdparty",
+     "cwd": "node_modules/trumbowyg/dist",
+     "debug": {
+       "src": ["trumbowyg.min.js", "ui/icons.svg", "plugins/cleanpaste/**"],
+       "path": "libs/trumbowyg/trumbowyg.min.js"
+      },
+     "release": {
+       "src":  ["trumbowyg.min.js", "ui/icons.svg", "plugins/cleanpaste/**"],
+       "path": "libs/trumbowyg/trumbowyg.min.js"
+      }
+    },
         
     "css": {
       "cdn": "3rdparty",
