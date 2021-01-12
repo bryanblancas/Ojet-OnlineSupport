@@ -1,0 +1,65 @@
+<div class="oj-flex">
+	<!-- Left column start -->
+	<div class="oj-sm-3 testclass">
+		<!-- Search functionality -->
+		<oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal"></oj-input-text> 
+		<!-- Search functionality -->
+
+		<!-- Ticket List -->
+
+		<oj-list-view id='ticket-list'
+		      aria-label='ticket-list'
+		      class='oj-sm-12 black'
+		      data='[[ticketListDataSource]]'
+		      selection-mode='single'
+		      selection-required='true'
+		      item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('ticket-list-template', true)]]">
+		</oj-list-view>
+
+		<!-- This is the template for each row in ticket list -->
+		<script type="text/html" id="ticket-list-template">
+	        <li data-bind="attr: {id: $data['id']}">
+	          	<div class="oj-flex">
+	            	<div class="oj-sm-8">
+	              		<strong>Ticket ID:</strong>
+	      				<oj-bind-text value="[[id]]"></oj-bind-text>
+	            	</div>
+		            <div class="oj-sm-4">
+		              	<oj-bind-text value="[[$parent.formatDate(dateCreated)]]"></oj-bind-text>
+		            </div>
+	          	</div>
+	          	<div class="oj-flex oj-sm-padding-2x-top oj-sm-padding-2x-bottom">
+	              	<oj-bind-text value="[[title]]"></oj-bind-text>
+	          	</div>
+	          	<div class="oj-flex">
+	                <div class="oj-sm-8">
+	             		<strong>Status:</strong>
+	                   <oj-bind-text value="[[status]]"></oj-bind-text>
+	          		</div>
+	                <div class="oj-sm-4">
+	             		<oj-bind-text value="[[priority]]"></oj-bind-text>
+	       			</div>
+	          	</div>
+	        </li>
+		</script>
+		<!-- Ticket List -->
+	</div>
+	<!-- Left column end -->
+
+	<!-- Right column start -->
+	<div class="oj-sm-9 testclass">
+		Ticket Contesnt goes here
+		pruab
+	</div>
+	<!-- Right column end -->
+
+
+<!-- 
+	<div data-bind="template: {name:'address-template', data:ticketListDataSource}"></div>
+
+	<script id="address-template" type="text/html">
+	    <span data-bind="text: id"></span><br />
+	    <span data-bind="text: title"></span><br />
+	    <span data-bind="text: author"></span><br />
+	</script> -->
+</div>
