@@ -20,6 +20,7 @@ define(['accUtils',
           // Create variable for Activities list and populate using key attribute fetch
           var activitiesArray = data;
           self.activityDataProvider(new ArrayDataProvider(activitiesArray, { keyAttributes: 'id' }));
+          console.log(activitiesArray);
         }
       );
 

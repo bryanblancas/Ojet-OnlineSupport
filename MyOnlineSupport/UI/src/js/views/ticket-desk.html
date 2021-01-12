@@ -3,7 +3,9 @@
 
 <div>
 	<h3><oj-label for="activitiesList">Activities</oj-label></h3>
-	<oj-list-view id="activitiesList" data="[[activityDataProvider]]">
+	<oj-list-view id="activitiesList" 
+	data="[[activityDataProvider]]"
+	selection-mode="single">
 		<template slot="itemTemplate">
 		 	<div>
           		<strong>
@@ -20,7 +22,6 @@
 	<!-- Label básico -->
 	<!-- Remmember [[]] is one way binding (only view) -->
 	<!-- {{}} is two way binding -->
-	<h3><oj-label for="basicSelect">Item Details</oj-label></h3>
   <hr style="margin-top:12px;">
  	<oj-label for="basicSelect">Select Chart:</oj-label>
  	<oj-select-single id="basicSelect"
@@ -35,7 +36,7 @@
           animation-on-display="auto"
           animation-on-data-change="auto"
           hover-behavior="dim"
-          style="max-width:500px;width:100%;height:350px;">
+          style="max-width:100%;width:100%;height:350px;">
        	<template slot='itemTemplate' data-oj-as='item'>
        		<oj-chart-item value='[[item.data.value]]'
                    group-id='[[ [item.data.group] ]]'
