@@ -4,6 +4,7 @@
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
     "@oracle/oraclejet": "~9.2.0",
+    "node-sass": "^5.0.0",
     "trumbowyg": "^2.23.0"
   },
   "devDependencies": {
