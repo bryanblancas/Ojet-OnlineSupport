@@ -1,0 +1,47 @@
+
+<h1>Product Information</h1>
+
+<div>
+	<h3><oj-label for="activitiesList">Activities</oj-label></h3>
+	<oj-list-view id="activitiesList" data="[[activityDataProvider]]">
+		<template slot="itemTemplate">
+		 	<div>
+          		<strong>
+            	<oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
+          		</strong>
+    		</div>
+		</template>
+	</oj-list-view>
+</div>
+
+<!-- This is a Component -->
+<!-- Select example -->
+<div>
+	<!-- Label básico -->
+	<!-- Remmember [[]] is one way binding (only view) -->
+	<!-- {{}} is two way binding -->
+	<h3><oj-label for="basicSelect">Item Details</oj-label></h3>
+  <hr style="margin-top:12px;">
+ 	<oj-label for="basicSelect">Select Chart:</oj-label>
+ 	<oj-select-single id="basicSelect"
+                   style="max-width:20em"
+                   data="[[chartTypes]]"
+                   value="{{val}}">
+ 	</oj-select-single>
+
+ 	<oj-chart id="barChart"
+          type="[[val]]" 
+          data="[[chartDataProvider]]"
+          animation-on-display="auto"
+          animation-on-data-change="auto"
+          hover-behavior="dim"
+          style="max-width:500px;width:100%;height:350px;">
+       	<template slot='itemTemplate' data-oj-as='item'>
+       		<oj-chart-item value='[[item.data.value]]'
+                   group-id='[[ [item.data.group] ]]'
+                   series-id='[[item.data.series]]'>
+			</oj-chart-item>
+		</template>
+	</oj-chart>
+
+</div>
