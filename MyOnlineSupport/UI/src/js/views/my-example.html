@@ -2,14 +2,14 @@
 <div class="oj-flex">
 
   <!-- Left Column Start-->
-  <div class="oj-sm-3">
+  <div class="oj-sm-3 left-column-container">
     <!-- Search functionality -->
-    <oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal"></oj-input-text>
+    <oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal" placeholder="Search"></oj-input-text>
     <!-- Search functionality -->
 
-    <div id="mainList">
+    <div id="mainList" class="oj-flex">
       <oj-list-view id="listView" 
-                    class="leftlist oj-sm-12"
+                    class="oj-sm-12"
                     data="[[dataProvider]]"
                     selection="{{itemListSelected}}"
                     selection-mode="single"

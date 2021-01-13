@@ -1,5 +1,5 @@
 h1,h2,h3 {
-	color: $font-color;
+	color: $accent-color;
 }
 
 p.continue{
@@ -7,10 +7,35 @@ p.continue{
 }
 
 .enfasis{
-	color: $font-color;
+	color: $accent-color;
 	font-size: large;
 }
 
-.leftlist{
-	background-color: $list-background-color;
+.oj-web-applayout-header {
+    background-color: $brand-color;
+    box-shadow: 0 8px 16px 0 rgba($brand-color, 0.2);
+}
+.oj-web-applayout-header-title {
+    color: $base-letter-color;
+}
+.oj-web-applayout-footer {
+    min-height:0;
+}
+header {
+    span {
+        color: $base-letter-color;
+    }
+    .oj-hover {
+        background-color:transparent !important;
+    }
+}
+
+.oj-tabbar-item {
+    padding-bottom: 10px;
+}
+
+.oj-listview-element {
+    .oj-selected {
+        border-left: 6px solid $accent-color;
+    }
 }
