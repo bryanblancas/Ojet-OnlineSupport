@@ -15,7 +15,8 @@ define(['accUtils',
     function myExampleViewModel() {
       var self = this;
       self.dataProvider = ko.observable();
-      
+      self.itemListSelected = ko.observable();
+
       /*
       IF I CONSUME THE ENDPOINT THE LIST DOESN'T SHOW ITEMS
       I DON'T KNOW WHY
@@ -125,6 +126,59 @@ define(['accUtils',
 
       
       self.dataProvider(new oj.ArrayTableDataSource(self.data, { keyAttributes: 'id' }));
+
+      /*For TAB BAR*/
+      self.selectedBarItem = ko.observable("settings");
+      /* Tab Component */
+      self.tabData = ko.observableArray(
+        [
+          {
+            name: 'Settings',
+            id: 'settings'
+          },
+          {
+            name: 'Tools',
+            id: 'tools'
+          },
+          {
+            name: 'Base',
+            id: 'base'
+          },
+          {
+            name: 'Environment',
+            disabled: 'true',
+            id: 'environment'
+          },
+          {
+            name: 'Security',
+            id: 'security'
+          }
+        ]
+      );
+      self.tabBarDataSource = new oj.ArrayTableDataSource(self.tabData, { idAttribute: 'id' });
+
+      self.deleteTab = function (id) {
+        var hnavlist = document.getElementById('ticket-tab-bar'),
+        items = self.tabData();
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].id === id) {
+            self.tabData.splice(i, 1);
+            oj.Context.getContext(hnavlist)
+              .getBusyContext()
+              .whenReady()
+              .then(function () {
+                hnavlist.focus();
+              });
+            break;
+          }
+        }
+      };
+      self.onTabRemove = function (event) {
+        self.deleteTab(event.detail.key);
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
 
 
       /* Utils */

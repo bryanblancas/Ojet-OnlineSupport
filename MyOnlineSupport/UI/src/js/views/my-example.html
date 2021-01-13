@@ -11,6 +11,7 @@
       <oj-list-view id="listView" 
                     class="leftlist oj-sm-12"
                     data="[[dataProvider]]"
+                    selection="{{itemListSelected}}"
                     selection-mode="single"
                     selection-required="true">
         <template slot="itemTemplate" 
@@ -39,7 +40,33 @@
   
   <!-- Right Column Start-->
   <div class="oj-sm-9">
-      Ticket Content goes here
+      <!-- Tab Bar Start -->
+      <div class="oj-flex oj-sm-padding-2x-top">
+        <div id="tabbar">
+         <oj-tab-bar
+          contextmenu="tabmenu"
+          id="ticket-tab-bar"
+          selection="{{selectedBarItem}}"
+          edge="top"
+          data="[[tabBarDataSource]]"
+          on-oj-remove="[[onTabRemove]]"
+          item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('tab-template', true)]]"
+          class="oj-sm-12 oj-sm-condense oj-tabbar-item-dividers">
+            <oj-menu slot="contextMenu" style="display:none" aria-label="Actions">
+              <oj-option data-oj-command="oj-tabbar-remove">Removable</oj-option>
+            </oj-menu>
+         </oj-tab-bar>
+        </div>
+      </div>
+      <!-- ITEM TEMPLATE -->
+      <script type="text/html" id="tab-template">
+        <li class="oj-removable" data-bind="css:{'oj-disabled' : $data['disabled']=='true'}">
+           <a href="#">
+                <oj-bind-text value="[[name]]"></oj-bind-text>
+            </a>
+        </li>
+      </script>
+      <!-- Tab Bar End -->
   </div>
   <!-- Right Column End -->
 
