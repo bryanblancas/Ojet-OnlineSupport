@@ -1,3 +1,16 @@
 h1,h2,h3 {
 	color: $font-color;
 }
+
+p.continue{
+	display: inline;
+}
+
+.enfasis{
+	color: $font-color;
+	font-size: large;
+}
+
+.leftlist{
+	background-color: $list-background-color;
+}

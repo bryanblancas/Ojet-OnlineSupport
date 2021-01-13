@@ -1,0 +1,46 @@
+
+<div class="oj-flex">
+
+  <!-- Left Column Start-->
+  <div class="oj-sm-3">
+    <!-- Search functionality -->
+    <oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal"></oj-input-text>
+    <!-- Search functionality -->
+
+    <div id="mainList">
+      <oj-list-view id="listView" 
+                    class="leftlist oj-sm-12"
+                    data="[[dataProvider]]"
+                    selection-mode="single"
+                    selection-required="true">
+        <template slot="itemTemplate" 
+                  data-oj-as="ticket">
+          <li>
+            <oj-list-item-layout>
+              <div class="oj-flex">
+                <div class="oj-sm-9">
+                  [<oj-bind-text value="[[ticket.data.id]]"></oj-bind-text>]: 
+                    <p class="continue enfasis"><oj-bind-text value="[[ticket.data.title]]"></oj-bind-text></p><br>
+                  Author: <oj-bind-text value="[[ticket.data.author]]"></oj-bind-text>  <br><br>
+                  Status: <oj-bind-text value="[[ticket.data.status]]"></oj-bind-text>  
+                </div>
+                <div class="oj-sm-3 oj-sm-padding-2x-top oj-sm-padding-2x-bottom">
+                  Created: <oj-bind-text value="[[formatDate(ticket.data.dateCreated)]]"></oj-bind-text>  <br><br>
+                  Priority: <oj-bind-text value="[[ticket.data.priority]]"></oj-bind-text>  <br><br>
+                </div>
+              </div>
+            </oj-list-item-layout>
+          </li>
+        </template>
+      </oj-list-view>  
+    </div>
+  </div>
+  <!-- Left Column End-->
+  
+  <!-- Right Column Start-->
+  <div class="oj-sm-9">
+      Ticket Content goes here
+  </div>
+  <!-- Right Column End -->
+
+</div>
