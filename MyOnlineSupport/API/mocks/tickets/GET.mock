@@ -93,5 +93,3 @@ Content-Type: application/json
     }
   ]
 }
-
-// TO RUN THE MOCKSERVER USE mockserver -p 8080 -m  mocks
