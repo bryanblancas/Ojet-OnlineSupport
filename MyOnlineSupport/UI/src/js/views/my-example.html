@@ -2,6 +2,7 @@
 
   <!-- Left Column Start-->
   <div class="oj-sm-3 left-column-container">
+    
     <!-- Search functionality -->
     <oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal" placeholder="Search"></oj-input-text>
     <!-- Search functionality -->
@@ -67,6 +68,19 @@
         </li>
       </script>
       <!-- Tab Bar End -->
+
+      <div class="oj-flex">
+        <!-- Selected Ticket View -->
+        <div  data-bind="ojModule: { 
+                          name: 'view-ticket',
+                          params:   {ticketModel: selectedTicketModel }
+                        }" 
+              class="oj-sm-padding-4x">
+        </div>
+        <!-- Selected Ticket View -->
+      </div>
+
+
   </div>
   <!-- Right Column End -->
 
