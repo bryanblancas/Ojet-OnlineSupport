@@ -1,17 +1,71 @@
+<div class="oj-flex">
 
-  <oj-list-view id="activitiesList" style="width:100%;height:500px;overflow-x:hidden" data="[[activityDataProvider]]" >
-    <template slot="itemTemplate">
-      <div class="oj-flex" style="flex-wrap: nowrap">
-        <div class="demo-content oj-flex-item">
-          <div>
-            <strong>
-              <oj-bind-text value="[[$current.data.title]]"></oj-bind-text>
-            </strong>
-          </div>
-          <span class="demo-metadata">
-            <oj-bind-text value="[[$current.data.id]]"></oj-bind-text>
-          </span>
+  <!-- Left Column Start-->
+  <div class="oj-sm-3 left-column-container">
+    <!-- Search functionality -->
+    <oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal" placeholder="Search"></oj-input-text>
+    <!-- Search functionality -->
+
+    <div id="mainList" class="oj-flex">
+      <oj-list-view id="listView" 
+                    class="oj-sm-12"
+                    data="[[ticketsDataProvider]]"
+                    selection-mode="single"
+                    selection-required="true">
+        <template slot="itemTemplate" 
+                  data-oj-as="ticket">
+          <li>
+            <oj-list-item-layout>
+              <div class="oj-flex">
+                <div class="oj-sm-9">
+                  [<oj-bind-text value="[[ticket.data.id]]"></oj-bind-text>]: 
+                    <p class="continue enfasis"><oj-bind-text value="[[ticket.data.title]]"></oj-bind-text></p><br>
+                  Author: <oj-bind-text value="[[ticket.data.author]]"></oj-bind-text>  <br><br>
+                  Status: <oj-bind-text value="[[ticket.data.status]]"></oj-bind-text>  
+                </div>
+                <div class="oj-sm-3 oj-sm-padding-2x-top oj-sm-padding-2x-bottom">
+                  Created: <oj-bind-text value="[[formatDate(ticket.data.dateCreated)]]"></oj-bind-text>  <br><br>
+                  Priority: <oj-bind-text value="[[ticket.data.priority]]"></oj-bind-text>  <br><br>
+                </div>
+              </div>
+            </oj-list-item-layout>
+          </li>
+        </template>
+      </oj-list-view>  
+    </div>
+  </div>
+  <!-- Left Column End-->
+  
+  <!-- Right Column Start-->
+  <div class="oj-sm-9">
+      <!-- Tab Bar Start -->
+      <div class="oj-flex oj-sm-padding-2x-top">
+        <div id="tabbar">
+         <oj-tab-bar
+          contextmenu="tabmenu"
+          id="ticket-tab-bar"
+          selection="{{selectedBarItem}}"
+          edge="top"
+          data="[[tabBarDataSource]]"
+          on-oj-remove="[[onTabRemove]]"
+          item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('tab-template', true)]]"
+          class="oj-sm-12 oj-sm-condense oj-tabbar-item-dividers">
+            <oj-menu slot="contextMenu" style="display:none" aria-label="Actions">
+              <oj-option data-oj-command="oj-tabbar-remove">Removable</oj-option>
+            </oj-menu>
+         </oj-tab-bar>
         </div>
       </div>
-    </template>
-  </oj-list-view>
+      <!-- ITEM TEMPLATE -->
+      <script type="text/html" id="tab-template">
+        <li class="oj-removable" data-bind="css:{'oj-disabled' : $data['disabled']=='true'}">
+           <a href="#">
+                <oj-bind-text value="[[name]]"></oj-bind-text>
+            </a>
+        </li>
+      </script>
+      <!-- Tab Bar End -->
+  </div>
+  <!-- Right Column End -->
+
+</div>

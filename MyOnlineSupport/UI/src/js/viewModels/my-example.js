@@ -1,42 +1,105 @@
 define(
   ['accUtils',
    'knockout',
+   'jquery',
    'ojs/ojmodel',
    'ojs/ojcollectiondataprovider',
-   'ojs/ojlabel',
-   'ojs/ojchart',
+   'ojs/ojarrayTableDataSource',
    'ojs/ojlistview',
-   'ojs/ojavatar'
+   'ojs/ojselectsingle',
+   'ojs/ojlistitemlayout',
+   'ojs/ojvalidation-datetime',
+   'ojs/ojinputtext'
   ],
-  function (accUtils, ko, Model, CollectionDataProvider)   {
+  function (accUtils, ko, $, Model, CollectionDataProvider)   {
     function myExampleViewModel() {
       var self = this;
-      self.activityDataProvider = ko.observable();
+
+      /*Variables*/
+      self.ticketsDataProvider = ko.observable();
+      self.selectedBarItem = ko.observable();
       
+
       //REST endpoint
       var RESTurl = "http://localhost:8080/tickets";
-
       //Single line of data
-      var activityModel = Model.Model.extend({
+      var ticketModel = Model.Model.extend({
         urlRoot: RESTurl,
         idAttribute: 'id'
       });
-
       //Multiple models i.e. multiple lines of data
-      self.myActivity = new activityModel();
-      var activityCollection = new Model.Collection.extend({
+      self.tickets = new ticketModel();
+      var ticketsCollection = new Model.Collection.extend({
          url: RESTurl,
-         model: self.myActivity,
+         model: self.tickets,
          comparator: 'id'
       });
+      // Generating the ticketDataProvider
+      self.myTicketCol = new ticketsCollection();
+      self.ticketsDataProvider(new CollectionDataProvider(self.myTicketCol));
 
-      /*
-      *An observable called activityDataProvider is already bound in the View file
-      *from the JSON example, so you don't need to update dashboard.html
-      */
-      self.myActivityCol = new activityCollection();
-      self.activityDataProvider(new CollectionDataProvider(self.myActivityCol));
+      
+      /* Tab Component */
+      self.tabData = ko.observableArray(
+        [
+          {
+            name: 'Settings',
+            id: 'settings'
+          },
+          {
+            name: 'Tools',
+            id: 'tools'
+          },
+          {
+            name: 'Base',
+            id: 'base'
+          },
+          {
+            name: 'Environment',
+            disabled: 'true',
+            id: 'environment'
+          },
+          {
+            name: 'Security',
+            id: 'security'
+          }
+        ]
+      );
+      self.tabBarDataSource = new oj.ArrayTableDataSource(self.tabData, { idAttribute: 'id' });
 
+      self.deleteTab = function (id) {
+        var hnavlist = document.getElementById('ticket-tab-bar'),
+        items = self.tabData();
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].id === id) {
+            self.tabData.splice(i, 1);
+            oj.Context.getContext(hnavlist)
+              .getBusyContext()
+              .whenReady()
+              .then(function () {
+                hnavlist.focus();
+              });
+            break;
+          }
+        }
+      };
+      self.onTabRemove = function (event) {
+        self.deleteTab(event.detail.key);
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
+
+      /* Utils */
+      self.formatDate = function (date){
+        var formatDate = oj.Validation.converterFactory(oj.ConverterFactory.CONVERTER_TYPE_DATETIME)
+          .createConverter(
+            {
+              'pattern': 'dd/MM/yyyy'
+            }
+          );
+        return formatDate.format(date)
+      }
     }
     return myExampleViewModel;
   }
