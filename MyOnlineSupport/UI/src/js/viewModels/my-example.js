@@ -9,13 +9,28 @@ define(['accUtils',
         'ojs/ojlistitemlayout',
         'ojs/ojtable',
         'ojs/ojvalidation-datetime',
-        'ojs/ojinputtext'
+        'ojs/ojinputtext',
+        'ojs/ojmodel'
        ],  
   function(accUtils, ko, $, ArrayDataProvider)  {
     function myExampleViewModel() {
       var self = this;
       self.dataProvider = ko.observable();
-      self.itemListSelected = ko.observable();
+      
+
+      /*Handling ticket selection*/
+      self.selectedTicket = ko.observableArray([]);
+      self.selectedTicketModel = ko.observable();
+      
+
+      self.selectedTicketRepId = ko.observable();
+
+      /*For TAB BAR*/
+      self.selectedBarItem = ko.observable();
+
+      /* Tab Component */
+      self.tabData = ko.observableArray([]);
+
 
       /*
       IF I CONSUME THE ENDPOINT THE LIST DOESN'T SHOW ITEMS
@@ -125,36 +140,55 @@ define(['accUtils',
       ];
 
       
-      self.dataProvider(new oj.ArrayTableDataSource(self.data, { keyAttributes: 'id' }));
+      // self.dataProvider(new oj.ArrayTableDataSource(self.data, { keyAttributes: 'id' }));
+      
+      self.ticketList = ko.observable(self.data);
+      self.dataProvider(new oj.ArrayTableDataSource(self.ticketList()));
 
-      /*For TAB BAR*/
-      self.selectedBarItem = ko.observable("settings");
-      /* Tab Component */
-      self.tabData = ko.observableArray(
-        [
-          {
-            name: 'Settings',
-            id: 'settings'
-          },
-          {
-            name: 'Tools',
-            id: 'tools'
-          },
-          {
-            name: 'Base',
-            id: 'base'
-          },
-          {
-            name: 'Environment',
-            disabled: 'true',
-            id: 'environment'
-          },
-          {
-            name: 'Security',
-            id: 'security'
-          }
-        ]
-      );
+      /* List selection listener */
+      self.listSelectionChanged = function () {
+        // The problem I have with this is that the line of code below
+        // send an error "Ticket List is not a function"
+        // self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
+
+        // MY APPROACH
+        // Assigning the selectedTicket to selectedTicketModel
+        self.selectedTicketModel(self.selectedTicket()[0]);
+        // alert(self.selectedTicketModel()+"\n"+self.selectedTicket()[0]+"\n typeof: "+typeof(self.selectedTicket()[0]));
+        
+        // Check if the selected ticket exists within the tab data
+        var match = ko.utils.arrayFirst(self.tabData(), function (item) {
+          return item.id == self.selectedTicket()[0];
+        });
+
+        // If the selected item doesn't exist in the tab bar, push it into the tabData observable Array
+        if(!match){
+          // alert("About to insert a new one tab");
+          self.tabData.push({
+            // This is wrong, but since i don't know how to implement a model to extract attributes of the object,
+            // this is the only way to put a reasonable name in the tabbar
+            "name": JSON.stringify(self.selectedTicket()[0]).substr(0,7),
+            "id": self.selectedTicket()[0]
+          });
+        }
+        self.selectedBarItem(self.selectedTicket()[0]);
+
+        // BOOK'S APPROACH
+        // self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
+        // // Check if the selected ticket exists within the tab data
+        // var match = ko.utils.arrayFirst(self.tabData(), function (item) {
+        //      return item.id == self.selectedTicket()[0];
+        // });
+        // if (!match) {
+        //       self.tabData.push({
+        //            "name": self.selectedTicket()[0],
+        //            "id": self.selectedTicket()[0]
+        //       });
+        // }
+        // self.selectedTicketRepId(self.selectedTicketModel().get('representativeId'));
+        // self.selectedBarItem(self.selectedTicket()[0]);
+      }
+
       self.tabBarDataSource = new oj.ArrayTableDataSource(self.tabData, { idAttribute: 'id' });
 
       self.deleteTab = function (id) {
