@@ -10,6 +10,8 @@
       <oj-list-view id="listView" 
                     class="oj-sm-12"
                     data="[[ticketsDataProvider]]"
+                    selection="{{selectedTicket}}"
+                    on-selection-changed="[[listSelectionChanged]]"
                     selection-mode="single"
                     selection-required="true">
         <template slot="itemTemplate" 

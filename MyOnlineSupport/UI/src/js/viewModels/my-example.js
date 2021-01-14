@@ -15,10 +15,24 @@ define(
     function myExampleViewModel() {
       var self = this;
 
-      /*Variables*/
+      /*
+      *
+      * VARIABLES
+      *
+      */
+
       self.ticketsDataProvider = ko.observable();
+      self.selectedTicket = ko.observableArray([]);
+      self.selectedTicketModel = ko.observable();
+      self.selectedTicketRepId = ko.observable();
+      self.tabData = ko.observableArray([]);
       self.selectedBarItem = ko.observable();
-      
+
+      /*
+      *
+      * GETTING TICKETS
+      *
+      */
 
       //REST endpoint
       var RESTurl = "http://localhost:8080/tickets";
@@ -35,36 +49,37 @@ define(
          comparator: 'id'
       });
       // Generating the ticketDataProvider
-      self.myTicketCol = new ticketsCollection();
-      self.ticketsDataProvider(new CollectionDataProvider(self.myTicketCol));
 
-      
-      /* Tab Component */
-      self.tabData = ko.observableArray(
-        [
-          {
-            name: 'Settings',
-            id: 'settings'
-          },
-          {
-            name: 'Tools',
-            id: 'tools'
-          },
-          {
-            name: 'Base',
-            id: 'base'
-          },
-          {
-            name: 'Environment',
-            disabled: 'true',
-            id: 'environment'
-          },
-          {
-            name: 'Security',
-            id: 'security'
+      // self.ticketList = new ticketsCollection();
+      // self.ticketsDataProvider(new CollectionDataProvider(self.ticketList));
+
+      // I'm assinging that ticketList will be a new Observable the aim of this is
+      // allow us to access the ticket list collection before it is passed into the collectionTableDataSource
+      self.ticketList = ko.observable(new ticketsCollection());
+      self.ticketsDataProvider(new oj.CollectionTableDataSource(self.ticketList()));
+
+      /*
+      *
+      * TAB BAR CONTROLING
+      *
+      */
+      /* List selection listener */
+      self.listSelectionChanged = function () {
+          self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
+          // Check if the selected ticket exists within the tab data
+          var match = ko.utils.arrayFirst(self.tabData(), function (item) {
+            return item.id == self.selectedTicket()[0];
+          });
+          if (!match) {
+            self.tabData.push({
+              "name": self.selectedTicket()[0],
+              "id": self.selectedTicket()[0]
+            });
           }
-        ]
-      );
+          self.selectedTicketRepId(self.selectedTicketModel().get('representativeId'));
+          self.selectedBarItem(self.selectedTicket()[0]);
+        }
+
       self.tabBarDataSource = new oj.ArrayTableDataSource(self.tabData, { idAttribute: 'id' });
 
       self.deleteTab = function (id) {
