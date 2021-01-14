@@ -4,6 +4,7 @@ define(
    'jquery',
    'ojs/ojmodel',
    'ojs/ojcollectiondataprovider',
+   'appUtils',
    'ojs/ojarrayTableDataSource',
    'ojs/ojlistview',
    'ojs/ojselectsingle',
@@ -11,7 +12,7 @@ define(
    'ojs/ojvalidation-datetime',
    'ojs/ojinputtext'
   ],
-  function (accUtils, ko, $, Model, CollectionDataProvider)   {
+  function (accUtils, ko, $, Model, CollectionDataProvider, appUtils)   {
     function myExampleViewModel() {
       var self = this;
 
@@ -105,15 +106,7 @@ define(
 
 
       /* Utils */
-      self.formatDate = function (date){
-        var formatDate = oj.Validation.converterFactory(oj.ConverterFactory.CONVERTER_TYPE_DATETIME)
-          .createConverter(
-            {
-              'pattern': 'dd/MM/yyyy'
-            }
-          );
-        return formatDate.format(date)
-      }
+      self.formatDate = appUtils.formatDate;
     }
     return myExampleViewModel;
   }

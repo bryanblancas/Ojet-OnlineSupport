@@ -263,6 +263,17 @@
       }
     },
 
+    "appUtils": {
+      "debug": {
+        "src":  ["app-util.js"],
+        "path": "utils/app-utils.js"
+      },
+      "release": {
+        "src":  ["app-utils.js"],
+        "path": "utils/app-utils.js"
+      }
+    },
+
     "proj4": {
       "cdn": "3rdparty",
       "cwd": "proj4/dist",
