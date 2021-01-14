@@ -49,20 +49,19 @@ define(
          comparator: 'id'
       });
       // Generating the ticketDataProvider
-
-      // self.ticketList = new ticketsCollection();
-      // self.ticketsDataProvider(new CollectionDataProvider(self.ticketList));
-
       // I'm assinging that ticketList will be a new Observable the aim of this is
       // allow us to access the ticket list collection before it is passed into the collectionTableDataSource
+      // If I dont declare ticketList as follow, the ticketDataProvider will throw an error "ticketList"
+      // is not a function
       self.ticketList = ko.observable(new ticketsCollection());
-      self.ticketsDataProvider(new oj.CollectionTableDataSource(self.ticketList()));
+      self.ticketsDataProvider(new CollectionDataProvider(self.ticketList()));
 
       /*
       *
       * TAB BAR CONTROLING
       *
       */
+
       /* List selection listener */
       self.listSelectionChanged = function () {
           self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
