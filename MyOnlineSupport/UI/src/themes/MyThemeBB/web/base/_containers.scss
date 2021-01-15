@@ -1,5 +1,6 @@
 .list-view-container {
     height: calc(100vh - 175px);
+    overflow-y: scroll;
 }
 .left-column-container {
     box-shadow: 0 8px 12px 0 $neutral-color;
@@ -7,4 +8,11 @@
 }
 .tabbar-container {
     background-color:$neutral-color;
+}
+.view-ticket-container {
+    height: calc(100vh - 161px);
+    overflow-y: scroll;
+}
+.support-rep-container {
+    background-color: $base-white-color;
 }
