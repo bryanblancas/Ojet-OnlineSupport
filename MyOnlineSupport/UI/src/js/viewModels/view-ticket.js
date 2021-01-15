@@ -39,13 +39,13 @@ define(
       */
 
       self.ticketModel = ko.computed(function () {
-              self.ticketId(params.ticketModel().get('id'))
-              self.title(params.ticketModel().get('title'))
-              self.author(params.ticketModel().get('author'))
-              self.dateCreated(params.ticketModel().get('dateCreated'))
-              self.message(params.ticketModel().get('message'))
-              self.status(params.ticketModel().get('status'))
-              self.attachment(params.ticketModel().get('attachment'))
+              self.ticketId(params.ticketModel().get('id'));
+              self.title(params.ticketModel().get('title'));
+              self.author(params.ticketModel().get('author'));
+              self.dateCreated(params.ticketModel().get('dateCreated'));
+              self.message(params.ticketModel().get('message'));
+              self.status(params.ticketModel().get('status'));
+              self.attachment(params.ticketModel().get('attachment'));
               return params.ticketModel();
       });
 
@@ -60,22 +60,18 @@ define(
       var repliesUrl = ko.computed( function(){
         return "http://localhost:8080/tickets/replies/" + self.ticketId()
       });
-
       var ticketReplyModel = Model.Model.extend({
         urlRoot: repliesUrl,
         idAttribute: 'id'
       });
-
       self.replies = new ticketReplyModel();
       var repliesCollection = new Model.Collection.extend({
          url: repliesUrl,
          model: self.replies,
          comparator: 'id'
       });
-
       self.repliesList = ko.observable(new repliesCollection());
       self.ticketRepliesDataSource(new CollectionDataProvider(self.repliesList()));
-
       self.ticketId.subscribe(function(){
         self.repliesList.fetch();
       })*/
@@ -125,7 +121,6 @@ define(
 
       /* Utils */
       self.formatDate = appUtils.formatDate;   
-      console.log(self.formatDate(self.dateCreated()));
 
     }
   return ViewTicketViewModel;

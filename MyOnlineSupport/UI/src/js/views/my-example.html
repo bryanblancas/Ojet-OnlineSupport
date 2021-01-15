@@ -9,7 +9,7 @@
 
     <div id="mainList" class="oj-flex">
       <oj-list-view id="listView" 
-                    class="oj-sm-12"
+                    class="oj-sm-12 list-view-container"
                     data="[[ticketsDataProvider]]"
                     selection="{{selectedTicket}}"
                     on-selection-changed="[[listSelectionChanged]]"
@@ -69,16 +69,19 @@
       </script>
       <!-- Tab Bar End -->
 
+      <!-- Selected Ticket View -->
       <div class="oj-flex">
-        <!-- Selected Ticket View -->
-        <div  data-bind="ojModule: { 
-                          name: 'view-ticket',
-                          params:   {ticketModel: selectedTicketModel }
-                        }" 
+        <div class="oj-sm-9 view-ticket-container">
+          <div data-bind="ojModule: {
+                            name: 'view-ticket',
+                            params: {ticketModel: selectedTicketModel}
+                          }"
               class="oj-sm-padding-4x">
+          </div>
         </div>
-        <!-- Selected Ticket View -->
+        <div class="oj-sm-3 support-rep-container"></div>
       </div>
+      <!-- Selected Ticket View -->
 
 
   </div>

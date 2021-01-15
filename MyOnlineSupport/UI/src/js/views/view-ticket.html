@@ -38,7 +38,10 @@
 	<!-- Ticket message -->
 
 	<!-- 
-	my try
+		My try
+		I don't know why this method works for my-example.html and
+		doesn't work here
+
 	<oj-list-view
 		id="reply-list-view"
 		aria-label="ticket reply list"
@@ -49,11 +52,11 @@
 			data-oj-as="reply">
 			<li>
 				<oj-list-item-layout>
-					<oj-bind-text value="[[reply.title]]"></oj-bind-text>
+					<oj-bind-text value="[[reply.data.author]]"></oj-bind-text>
 				</oj-list-item-layout>
 			</li>
 		</template>
-	</oj-list-view> -->
+	</oj-list-view>  -->
 
 	
     <oj-list-view
@@ -61,7 +64,7 @@
         aria-label="ticket reply list"
         class="oj-sm-12"
         data="[[ticketRepliesDataSource]]"
-     item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('ticket-replies-template', true)]]">
+     	item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('ticket-replies-template', true)]]">
     </oj-list-view>
     <!-- List to render ticket replies -->
     
@@ -69,10 +72,15 @@
     <script type="text/html" id="ticket-replies-template">
         <li data-bind="attr: {id: $data['id']}">
             <!-- First row of list item, sets up the item header -->
-            <div class="oj-flex oj-sm-padding-4x-vertical"
-                data-bind="style: { flexDirection: author !== $parent.author() ? 'row-reverse' : “ }">
-                <div class="oj-flex-item oj-sm-1 oj-sm-padding-2x-top"
-                    data-bind="css: author !== $parent.author() ? 'oj-sm-padding-4x-start' : 'oj-sm-padding-4x-end'">
+
+            <!-- $parent is the object of view-ticket.js, the ticket that the user clicked from the ticket list -->
+            <!-- Without parent refers to the current object of the list - list item -->
+            <!-- <div data-bind="text: author"></div>
+            <div data-bind="text: $parent.author"></div> -->
+
+         	<div class="oj-flex oj-sm-padding-4x-vertical">
+                <!-- data-bind="style: { flexDirection: author !== $parent.author() ? 'row-reverse' : “ }"> -->
+               <div class="oj-flex-item oj-sm-1 oj-sm-padding-2x-top">
                     <oj-avatar
                         role="img"
                         aria-label="User Avatar"
@@ -80,27 +88,23 @@
                     </oj-avatar>
                 </div>
                 <div class="oj-sm-8 oj-sm-flex-direction-column">
-                    <h2 data-bind="text: 'RE: ' + $parent.title(),
-                                    style: { textAlign: author !== $parent.author() ? 'right' : “ }">
-                    </h2>
-                    <div data-bind="text: author,
-                                    style: { textAlign: author !== $parent.author() ? 'right' : “ }">
-                    </div>
+                    <h2 data-bind="text: 'RE: ' + $parent.title()"></h2>
+                    <div data-bind="text: author"></div>
                 </div>
                 <div class="oj-sm-2 oj-text-sm oj-sm-padding-2x-vertical">
-                    <div
-                        data-bind="text: $parent.dateDifference(timestamp)"
-                        :title="[[$parent.formatDate(timestamp)]]">
-                    </div>
+                    <div data-bind="text: $parent.dateDifference(timestamp)"></div>
+                    <div data-bind="text: $parent.formatDate(timestamp)"></div>
                 </div>
                 <div class="oj-sm-1">
                 </div>
             </div>
+
             <!-- Second row in list item, outputs the message content -->
             <div class="oj-flex oj-sm-padding-2x-vertical">
                 <div class="oj-sm-1"></div>
                 <div class="oj-sm-10 oj-sm-padding-4x-bottom"
-                    data-bind="html: note"></div>
+            		data-bind="html: note">
+            	</div>
                 <div class="oj-sm-1"></div>
             </div>
         </li>
