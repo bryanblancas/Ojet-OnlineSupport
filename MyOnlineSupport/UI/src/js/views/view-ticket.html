@@ -3,7 +3,7 @@
 	<div class="oj-flex oj-sm-padding-2x-bottom">
 		<span 	class="oj-sm-5 oj-sm-padding-4x-end oj-text-sm" 
 				data-bind="text: ticketStatus(status())"></span>
-		<oj-button class="oj-flex-item oj-sm-padding-1x-end">Reply</oj-button>
+		<oj-button class="oj-flex-item oj-sm-padding-1x-end" on-oj-action="[[scrollToReply]]">Reply</oj-button>
 		<oj-button class="oj-flex-item oj-sm-padding-1x-end">Escalate Priority</oj-button>
 		<oj-button class="oj-flex-item oj-sm-padding-1x-end">Close Ticket</oj-button>
 	</div>
@@ -106,7 +106,7 @@
             		data-bind="html: note">
             	</div>
                 <div class="oj-sm-1"></div>
-            </div>
+			</div>
         </li>
     </script>
     <!-- List Template -->
@@ -114,5 +114,28 @@
     <!-- Reply Form -->
 	<h3 class="oj-sm-padding-4x">Reply</h3>
 	<div id="ticket-reply-area"></div>
+	<br>
+	<div class="oj-flex-bar">
+        <div class="oj-flex-bar-start oj-sm-align-items-center">
+            <oj-file-picker 
+            	class='oj-filepicker-custom oj-sm-padding-2x-end'
+                id="fileUpload"
+                selectOn='click'
+                on-oj-select='[[fileSelectionListener]]'
+                accept="[[allowedFileTypes]]"
+                selection-mode='single'>
+                <oj-button slot='trigger'>
+            		<span slot='startIcon' class='oj-fwk-icon oj-fwk-icon-arrowbox-n'></span>
+                    Upload
+                </oj-button>
+            </oj-file-picker>
+            <oj-bind-if test='[[uploadedFile()[0]]]'>
+                <oj-bind-text value="[[uploadedFile()[0].name]]"></oj-bind-text>
+            </oj-bind-if>
+        </div>
+        <div class="oj-flex-bar-end">
+            <oj-button id='reply-button' on-oj-action='[[ticketReply]]'>Reply</oj-button>
+        </div>
+	</div>
 	<!-- Reply Form -->
 </div>
