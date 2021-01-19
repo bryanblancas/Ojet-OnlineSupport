@@ -16,13 +16,19 @@
 			</oj-avatar>
 		</div>
 		<div class="oj-sm-8 oj-sm-flex-direction-column">
-			<h2 data-bind="text: title"></h2>
-			<div data-bind="text: author"></div>
+			<h2 data-bind="text: title()"></h2>
+			<div data-bind="text: author()"></div>
+			<oj-bind-if test='[[attachment()[0]]]'>
+				<div class="oj-flex oj-sm-padding-2x-top">
+					<span class="fas fa-paperclip"></span>
+					<div class="oj-sm-padding-1x-horizontal" data-bind="text: attachment()[0].filePath"></div>
+					(<div data-bind="text: attachment()[0].fileSize"></div>)
+				</div>
+			</oj-bind-if>
 		</div>
 		<div class="oj-sm-2 oj-text-sm oj-sm-padding-2x-vertical">
-			<div data-bind="text: dateDifference(dateCreated())"
-				:title="[[formatDate(dateCreated())]]">
-			</div>
+			<div data-bind="text: dateDifference(dateCreated())"></div>
+			<div data-bind="text: formatDate(dateCreated())"></div>
 		</div>
 		<div class="oj-sm-1"></div>
 	</div>
@@ -89,7 +95,14 @@
                 </div>
                 <div class="oj-sm-8 oj-sm-flex-direction-column">
                     <h2 data-bind="text: 'RE: ' + $parent.title()"></h2>
-                    <div data-bind="text: author"></div>
+					<div data-bind="text: author"></div>
+					<oj-bind-if test='[[attachment[0]]]'>
+                        <div class="oj-flex oj-sm-padding-2x-top" data-bind="style: { textAlign: author !== $parent.author() ? 'right' : '' }">
+                            <span class="fas fa-paperclip"></span>
+                            <div class="oj-sm-padding-1x-horizontal" data-bind="text: attachment[0].filePath"></div>
+                            (<div data-bind="text: attachment[0].fileSize"></div>)
+                        </div>
+					</oj-bind-if>
                 </div>
                 <div class="oj-sm-2 oj-text-sm oj-sm-padding-2x-vertical">
                     <div data-bind="text: $parent.dateDifference(timestamp)"></div>
