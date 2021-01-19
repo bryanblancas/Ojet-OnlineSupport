@@ -5,6 +5,7 @@ define(
     'appUtils',
     'ojs/ojmodel',
     'ojs/ojcollectiondataprovider',
+    'trumbowyg',
     'ojs/ojlistview',
     'ojs/ojarraydataprovider',
     'ojs/ojlistitemlayout',
@@ -118,6 +119,22 @@ define(
           else if (status === "Awaiting Customer Response") 
             return "Ticket status is currently 'awaiting customer response', our team is awaiting your reply.";
         }
+
+
+        /* Function to initialize the trumbowyg (textarea with more functions)*/
+        /*The life cycle event that we need to initialize the editor is going to be handleAttached.
+         This is because all we are waiting on is for the DOM to finish loading and the div that
+         we need to latch on to being present. Therefore, at this point in the life cycle, the element will be present.*/
+       self.handleAttached = function () {
+          $('#ticket-reply-area').trumbowyg(
+            {
+              btns: ['bold', 'italic', 'underline'], // Determine which options are available in the textarea
+              resetCss: true, // prevents any page CSS interfering with the editor
+              removeformatPasted: true //prevents any pasted formatting from being applied
+            }  
+          );
+        };
+
 
       /* Utils */
       self.formatDate = appUtils.formatDate;   

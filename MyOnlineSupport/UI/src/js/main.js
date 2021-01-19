@@ -48,7 +48,8 @@
         'corejs' : 'libs/corejs/shim',
         'chai': 'libs/chai/chai-4.2.0',
         'regenerator-runtime' : 'libs/regenerator-runtime/runtime',
-        'appUtils': 'utils/app-utils'
+        'appUtils': 'utils/app-utils',
+        'trumbowyg': ''
       }
       // endinjector
     }

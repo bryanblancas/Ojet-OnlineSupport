@@ -113,6 +113,16 @@ module.exports = function () {
     //   fileList: [],
     //   options: {}
     // },
+    sass: {
+          fileList: [
+              {
+                  cwd: 'node_modules/trumbowyg/dist/ui/sass',
+                  src: ['*'],
+                  dest: 'src/themes/MyThemeBB/web/third-party'
+              }
+          ],
+          options: {}
+    },
 
 /**
  * This is the web specific configuration. You can specify configurations targeted only for web apps. 
