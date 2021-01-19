@@ -138,7 +138,7 @@
                 accept="[[allowedFileTypes]]"
                 selection-mode='single'>
                 <oj-button slot='trigger'>
-            		<span slot='startIcon' class='oj-fwk-icon oj-fwk-icon-arrowbox-n'></span>
+            		<span class="fas fa-upload"></span>
                     Upload
                 </oj-button>
             </oj-file-picker>
@@ -147,7 +147,10 @@
             </oj-bind-if>
         </div>
         <div class="oj-flex-bar-end">
-            <oj-button id='reply-button' on-oj-action='[[ticketReply]]'>Reply</oj-button>
+            <oj-button id='reply-button' on-oj-action='[[ticketReply]]'>
+				<span class='fas fa-reply'></span>
+				Reply
+			</oj-button>
         </div>
 	</div>
 	<!-- Reply Form -->
