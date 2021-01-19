@@ -3,9 +3,29 @@
 	<div class="oj-flex oj-sm-padding-2x-bottom">
 		<span 	class="oj-sm-5 oj-sm-padding-4x-end oj-text-sm" 
 				data-bind="text: ticketStatus(status())"></span>
-		<oj-button class="oj-flex-item oj-sm-padding-1x-end" on-oj-action="[[scrollToReply]]">Reply</oj-button>
-		<oj-button class="oj-flex-item oj-sm-padding-1x-end">Escalate Priority</oj-button>
-		<oj-button class="oj-flex-item oj-sm-padding-1x-end">Close Ticket</oj-button>
+
+		<oj-button 
+			class="oj-flex-item oj-sm-padding-1x-end" 
+			on-oj-action="[[scrollToReply]]">
+			<span class='fas fa-reply'></span>
+			Reply
+		</oj-button>
+
+		<oj-button 
+			class="oj-flex-item oj-sm-padding-1x-end"
+			on-oj-action='[[escalatePriority]]'
+       		disabled="[[priority() === 1]]">
+			<span class='fas fa-hand-point-up'></span>
+			Escalate Priority
+		</oj-button>
+
+		<oj-button 
+			class="oj-flex-item oj-sm-padding-1x-end"
+			on-oj-action='[[confirmCloseDialog]]'>
+       		<span class='fas fa-times-circle'></span>
+			Close Ticket
+		</oj-button>
+
 	</div>
 	<!-- Ticket staus, rating and buttons -->
 
@@ -155,3 +175,26 @@
 	</div>
 	<!-- Reply Form -->
 </div>
+
+
+
+<!-- Modal dialog to confirm closure of the ticket -->
+<oj-dialog style="display:none" id="close-confirmation-dialog" title="Confirm Closure">
+      <div slot="body">
+             Are you sure you wish to close this ticket?
+             <oj-label for="closure-reason" class="oj-sm-padding-4x-top">Reason for closure</oj-label>
+             <oj-select-one id="closure-reason" value="{{closureReason}}">
+                   <oj-option value="Ticket Answered">Ticket answered</oj-option>
+                   <oj-option value="Workaround Provided">Workaround Provided</oj-option>
+                   <oj-option value="No longer an issue">No longer an issue</oj-option>
+                   <oj-option value="Other">Other</oj-option>
+             </oj-select-one>
+      </div>
+      <div slot="footer">
+             <oj-button id="cancel-close" on-oj-action="[[closeDialog]]">Cancel
+             </oj-button>
+             <oj-button id="confirm-close" class='oj-button-confirm' on-oj-action="[[closeTicket]]">Close
+             </oj-button>
+      </div>
+</oj-dialog>
+

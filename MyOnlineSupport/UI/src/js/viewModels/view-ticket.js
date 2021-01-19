@@ -5,14 +5,18 @@ define(
     'appUtils',
     'ojs/ojmodel',
     'ojs/ojcollectiondataprovider',
+    'signals',
     'trumbowyg',
     'ojs/ojlistview',
     'ojs/ojarraydataprovider',
     'ojs/ojlistitemlayout',
     'ojs/ojselectsingle',
-    'ojs/ojfilepicker'
+    'ojs/ojfilepicker',
+    'ojs/ojselectcombobox', 
+    'ojs/ojlabel',
+    'ojs/ojdialog' 
   ],
-  function (oj, ko, $, appUtils, Model, CollectionDataProvider) {
+  function (oj, ko, $, appUtils, Model, CollectionDataProvider, signals) {
     function ViewTicketViewModel(params) {
       var self = this;
       // console.log(params.ticketModel());
@@ -36,6 +40,14 @@ define(
       self.uploadedFile = ko.observableArray([]);
       self.allowedFileTypes = ko.observableArray(['image/*']);
 
+      // Variables to manage signals
+      // Assign local signal variables to those that have came in params
+      self.closeTicketSignal = params.closeTicketSignal;
+      self.updatePrioritySignal = params.updatePrioritySignal;
+      // Variables to store priority of the ticket and the reason of the closure
+      self.priority = ko.observable();
+      self.closureReason = ko.observable();
+
 
       /*
       *
@@ -51,6 +63,7 @@ define(
               self.message(params.ticketModel().get('message'));
               self.status(params.ticketModel().get('status'));
               self.attachment(params.ticketModel().get('attachment'));
+              self.priority(params.ticketModel().get('priority'));
               return params.ticketModel();
       });
 
@@ -219,6 +232,27 @@ define(
         console.log("Inside addTicketReplyToCollection: after create");
         $('#ticket-reply-area').trumbowyg('empty');
         self.uploadedFile('');
+      }
+
+      /*Evento of close ticket and change priority*/
+
+      /* Functions to close a ticket via a signal to the ticket desk VM */
+      self.confirmCloseDialog = function (event) {
+            document.getElementById('close-confirmation-dialog').open();
+      }
+      self.closeDialog = function (event) {
+            document.getElementById('close-confirmation-dialog').close();
+      }
+      self.closeTicket = function() {
+             self.closeTicketSignal.dispatch(self.ticketId(),self.closureReason());
+             self.closeDialog();
+      }
+      /* Function to escalate a ticket via a signal to the ticket desk VM */
+      self.escalatePriority = function() {
+             // Only send the signal if the priority is lower than 1
+             if(self.priority() > 1){
+                self.updatePrioritySignal.dispatch(self.ticketId());
+             }
       }
 
 

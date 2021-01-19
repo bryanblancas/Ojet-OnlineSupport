@@ -5,6 +5,7 @@ define(
    'ojs/ojmodel',
    'ojs/ojcollectiondataprovider',
    'appUtils',
+   'signals',
    'ojs/ojarrayTableDataSource',
    'ojs/ojlistview',
    'ojs/ojselectsingle',
@@ -12,7 +13,7 @@ define(
    'ojs/ojvalidation-datetime',
    'ojs/ojinputtext'
   ],
-  function (accUtils, ko, $, Model, CollectionDataProvider, appUtils)   {
+  function (accUtils, ko, $, Model, CollectionDataProvider, appUtils, signals)   {
     function myExampleViewModel() {
       var self = this;
 
@@ -28,6 +29,10 @@ define(
       self.selectedTicketRepId = ko.observable();
       self.tabData = ko.observableArray([]);
       self.selectedBarItem = ko.observable();
+
+      // Signals to manage events to the tickets
+      self.closeTicketSignal = new signals.Signal();
+      self.updatePrioritySignal = new signals.Signal();
 
       /*
       *
@@ -103,6 +108,56 @@ define(
         event.preventDefault();
         event.stopPropagation();
       };
+
+
+      /*
+      * Logic for signals
+      * These functions are executed each time that in view-ticket.js occurs a dispatch
+      */
+
+      /* Priority update listener, when a dispatch signal is sent, the priority is increased and the model item updated */
+      self.updatePrioritySignal.add(function(ticketId) {
+        var newPriority;
+        var modelItem = self.ticketList().get(ticketId);
+        var modelData = modelItem.attributes;
+        newPriority = modelData.priority - 1;
+        var updatedData = {
+          id: modelData.id,
+          priority: newPriority
+        };
+        modelItem.save(updatedData, {
+          wait: true,
+          success: function (model, response, options) {
+            console.log('UpdatePrioritySignal ModelItem Save success');
+            self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]))
+          },
+          error: function (jqXHR) {
+            console.log('Error');
+          }
+        });
+      });
+
+      /* Close ticket listener, when a dispatch signal is sent, the new object with closed status is created and the model item is updated */
+      self.closeTicketSignal.add(function(ticketId, closureReason) {
+        var modelItem = self.ticketList().get(ticketId);
+        var modelData = modelItem.attributes;
+        var updatedData = {
+          id: modelData.id,
+          status: 'Closed',
+          closureReason: closureReason
+        };
+        modelItem.save(updatedData, {
+          wait:true,
+          success: function (model, response, options) {
+            console.log('closeTicketSignal ModelItem Save success');
+            self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]))
+          },
+          error: function (jqXHR) {
+            console.log('Error');
+          }
+        });
+      })
+
 
 
       /* Utils */

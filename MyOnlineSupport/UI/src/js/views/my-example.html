@@ -74,7 +74,11 @@
         <div class="oj-sm-9 view-ticket-container">
           <div data-bind="ojModule: {
                             name: 'view-ticket',
-                            params: {ticketModel: selectedTicketModel}
+                            params: {
+                              ticketModel: selectedTicketModel,
+                              closeTicketSignal: closeTicketSignal, 
+                              updatePrioritySignal: updatePrioritySignal
+                            }
                           }"
               class="oj-sm-padding-4x">
           </div>
