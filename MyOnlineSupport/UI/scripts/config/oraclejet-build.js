@@ -45,6 +45,15 @@ module.exports = function () {
     //   }
     //  ]
     // }
+    copyCustomLibsToStaging: {
+      fileList: [
+         {
+             cwd: 'node_modules/@fortawesome/fontawesome-free/',
+             src: ['css/*', 'webfonts/*'],
+             dest: 'web/css/fontawesome'
+         }
+      ]
+ },
 
 /**
  * # copySrcToStaging

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An Oracle JavaScript Extension Toolkit(JET) web app",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "@oracle/oraclejet": "~9.2.0",
     "node-sass": "^5.0.0",
     "trumbowyg": "^2.23.0"
