@@ -2,25 +2,25 @@ define(
   ['ojs/ojcore',
     'knockout',
     'jquery',
-    'appUtils',
-    'ojs/ojmodel',
-    'ojs/ojcollectiondataprovider',
-    'signals',
-    'trumbowyg',
-    'ojs/ojlistview',
+    'appUtils', // My Utils File
+    'ojs/ojmodel', // To make models for thw collection
+    'ojs/ojcollectiondataprovider', // To consume the API
+    'signals', // Pass information between oj modules
+    'trumbowyg', // Lovely Text Area 
+    'ojs/ojlistview', // List View
     'ojs/ojarraydataprovider',
-    'ojs/ojlistitemlayout',
+    'ojs/ojlistitemlayout', // Item of List View
     'ojs/ojselectsingle',
-    'ojs/ojfilepicker',
+    'ojs/ojfilepicker', // File Picker
     'ojs/ojselectcombobox', 
     'ojs/ojlabel',
-    'ojs/ojdialog',
-    'ojs/ojgauge' 
+    'ojs/ojdialog', // Modal Dialog
+    'ojs/ojgauge' // Rating Stars
   ],
   function (oj, ko, $, appUtils, Model, CollectionDataProvider, signals) {
     function ViewTicketViewModel(params) {
       var self = this;
-      // console.log(params.ticketModel());
+
       /*
       *
       * VARIABLES
@@ -37,20 +37,23 @@ define(
       self.message = ko.observable();
       self.status = ko.observable()
       self.attachment = ko.observable();
+      self.closedTicketRatingValue = ko.observable();
 
+      
+      // Variables to storage reply information
       self.uploadedFile = ko.observableArray([]);
       self.allowedFileTypes = ko.observableArray(['image/*']);
 
-      // Variables to manage signals
-      // Assign local signal variables to those that have came in params
+      /*
+      Variables to manage signals
+        Assign local signal variables to those that have came in params
+      */
       self.closeTicketSignal = params.closeTicketSignal;
       self.updatePrioritySignal = params.updatePrioritySignal;
+
       // Variables to store priority of the ticket and the reason of the closure
       self.priority = ko.observable();
       self.closureReason = ko.observable();
-
-      // To manage rating value
-      self.closedTicketRatingValue = ko.observable();
 
       /*
       *
@@ -112,11 +115,6 @@ define(
         self.uploadedFile('');
       })
 
-
-      /*To define the rating of the ticket*/
-      // self.closedTicketRatingValue(params.ticketModel().get('ticketRating'));
-
-
       /* Function to initialize the trumbowyg (textarea with more functions)*/
       /*The life cycle event that we need to initialize the editor is going to be handleAttached.
         This is because all we are waiting on is for the DOM to finish loading and the div that
@@ -130,6 +128,7 @@ define(
             }  
           );
         };
+
 
       /* Promise to call the file upload function 
       This means that the function that calls this function will wait for the response*/
@@ -244,7 +243,6 @@ define(
       self.ratingValueChanged = function(event) {
         self.closedTicketRatingValue(event.detail['value']);  
       } 
-
 
 
       /* Utils */

@@ -81,115 +81,93 @@
 	</div>
 	<!-- Ticket message -->
 
-	<!-- 
-		My try
-		I don't know why this method works for my-example.html and
-		doesn't work here
-
-	<oj-list-view
-		id="reply-list-view"
-		aria-label="ticket reply list"
-		class="oj-sm-12"
-		data="[[ticketRepliesDataSource]]">
-		<template
-			slot="ticket-replies-template"
-			data-oj-as="reply">
-			<li>
-				<oj-list-item-layout>
-					<oj-bind-text value="[[reply.data.author]]"></oj-bind-text>
-				</oj-list-item-layout>
-			</li>
-		</template>
-	</oj-list-view>  -->
-
-	
-    <oj-list-view
-        id="reply-list-view"
-        aria-label="ticket reply list"
-        class="oj-sm-12"
-        data="[[ticketRepliesDataSource]]"
-     	item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('ticket-replies-template', true)]]">
-    </oj-list-view>
-    <!-- List to render ticket replies -->
+  <oj-list-view
+    id="reply-list-view"
+    aria-label="ticket reply list"
+    class="oj-sm-12"
+    data="[[ticketRepliesDataSource]]"
+   	item.renderer="[[oj.KnockoutTemplateUtils.getRenderer('ticket-replies-template', true)]]">
+  </oj-list-view>
+  <!-- List to render ticket replies -->
     
-    <!-- List Template -->
-    <script type="text/html" id="ticket-replies-template">
-        <li data-bind="attr: {id: $data['id']}">
-            <!-- First row of list item, sets up the item header -->
+  <!-- List Template -->
+  <script type="text/html" id="ticket-replies-template">
+    <li data-bind="attr: {id: $data['id']}">
+      <!-- First row of list item, sets up the item header -->
 
-            <!-- $parent is the object of view-ticket.js, the ticket that the user clicked from the ticket list -->
-            <!-- Without parent refers to the current object of the list - list item -->
-            <!-- <div data-bind="text: author"></div>
-            <div data-bind="text: $parent.author"></div> -->
+      <!-- $parent is the object of view-ticket.js, the ticket that the user clicked from the ticket list -->
+      <!-- Without parent refers to the current object of the list - list item -->
+      <!-- <div data-bind="text: author"></div>
+      <div data-bind="text: $parent.author"></div> -->
 
-         	<div class="oj-flex oj-sm-padding-4x-vertical">
-                <!-- data-bind="style: { flexDirection: author !== $parent.author() ? 'row-reverse' : “ }"> -->
-               <div class="oj-flex-item oj-sm-1 oj-sm-padding-2x-top">
-                    <oj-avatar
-                        role="img"
-                        aria-label="User Avatar"
-                        size="xs">
-                    </oj-avatar>
-                </div>
-                <div class="oj-sm-8 oj-sm-flex-direction-column">
-                    <h2 data-bind="text: 'RE: ' + $parent.title()"></h2>
-					<div data-bind="text: author"></div>
-					<oj-bind-if test='[[attachment[0]]]'>
-                        <div class="oj-flex oj-sm-padding-2x-top" data-bind="style: { textAlign: author !== $parent.author() ? 'right' : '' }">
-                            <span class="fas fa-paperclip"></span>
-                            <div class="oj-sm-padding-1x-horizontal" data-bind="text: attachment[0].filePath"></div>
-                            (<div data-bind="text: attachment[0].fileSize"></div>)
-                        </div>
-					</oj-bind-if>
-                </div>
-                <div class="oj-sm-2 oj-text-sm oj-sm-padding-2x-vertical">
-                    <div data-bind="text: $parent.dateDifference(timestamp)"></div>
-                    <div data-bind="text: $parent.formatDate(timestamp)"></div>
-                </div>
-                <div class="oj-sm-1">
-                </div>
+     	<div class="oj-flex oj-sm-padding-4x-vertical">
+        <!-- data-bind="style: { flexDirection: author !== $parent.author() ? 'row-reverse' : “ }"> -->
+        <div class="oj-flex-item oj-sm-1 oj-sm-padding-2x-top">
+          <oj-avatar
+              role="img"
+              aria-label="User Avatar"
+              size="xs">
+          </oj-avatar>
+        </div>
+        <div class="oj-sm-8 oj-sm-flex-direction-column">
+          <h2 data-bind="text: 'RE: ' + $parent.title()"></h2>
+				  <div data-bind="text: author"></div>
+			    <oj-bind-if test='[[attachment[0]]]'>
+            <div class="oj-flex oj-sm-padding-2x-top" data-bind="style: { textAlign: author !== $parent.author() ? 'right' : '' }">
+              <span class="fas fa-paperclip"></span>
+              <div class="oj-sm-padding-1x-horizontal" data-bind="text: attachment[0].filePath"></div>
+              (<div data-bind="text: attachment[0].fileSize"></div>)
             </div>
+			    </oj-bind-if>
+        </div>
+        <div class="oj-sm-2 oj-text-sm oj-sm-padding-2x-vertical">
+          <div data-bind="text: $parent.dateDifference(timestamp)"></div>
+          <div data-bind="text: $parent.formatDate(timestamp)"></div>
+        </div>
+        <div class="oj-sm-1"></div>
+      </div>
 
-            <!-- Second row in list item, outputs the message content -->
-            <div class="oj-flex oj-sm-padding-2x-vertical">
-                <div class="oj-sm-1"></div>
-                <div class="oj-sm-10 oj-sm-padding-4x-bottom"
-            		data-bind="html: note">
-            	</div>
-                <div class="oj-sm-1"></div>
-			</div>
-        </li>
-    </script>
-    <!-- List Template -->
+      <!-- Second row in list item, outputs the message content -->
+      <div class="oj-flex oj-sm-padding-2x-vertical">
+        <div class="oj-sm-1"></div>
+        <div class="oj-sm-10 oj-sm-padding-4x-bottom" data-bind="html: note"></div>
+        <div class="oj-sm-1"></div>
+      </div>
+    </li>
+  </script>
+  <!-- List Template -->
 
     <!-- Reply Form -->
 	<h3 class="oj-sm-padding-4x">Reply</h3>
 	<div id="ticket-reply-area"></div>
 	<br>
 	<div class="oj-flex-bar">
-        <div class="oj-flex-bar-start oj-sm-align-items-center">
-            <oj-file-picker 
-            	class='oj-filepicker-custom oj-sm-padding-2x-end'
-                id="fileUpload"
-                selectOn='click'
-                on-oj-select='[[fileSelectionListener]]'
-                accept="[[allowedFileTypes]]"
-                selection-mode='single'>
-                <oj-button slot='trigger'>
-            		<span class="fas fa-upload"></span>
-                    Upload
-                </oj-button>
-            </oj-file-picker>
-            <oj-bind-if test='[[uploadedFile()[0]]]'>
-                <oj-bind-text value="[[uploadedFile()[0].name]]"></oj-bind-text>
-            </oj-bind-if>
-        </div>
-        <div class="oj-flex-bar-end">
-          <oj-button id='reply-button' on-oj-action='[[ticketReply]]' disabled="[[status() === 'Closed']]">
-			      <span class='fas fa-reply'></span>
-			      Reply
-		       </oj-button>
-        </div>
+    <div class="oj-flex-bar-start oj-sm-align-items-center">
+      <oj-file-picker 
+	      class='oj-filepicker-custom oj-sm-padding-2x-end'
+        id="fileUpload"
+        selectOn='click'
+        on-oj-select='[[fileSelectionListener]]'
+        accept="[[allowedFileTypes]]"
+        selection-mode='single'>
+        <oj-button slot='trigger'>
+      		<span class="fas fa-upload"></span>
+          Upload
+        </oj-button>
+      </oj-file-picker>
+      <oj-bind-if test='[[uploadedFile()[0]]]'>
+         <oj-bind-text value="[[uploadedFile()[0].name]]"></oj-bind-text>
+      </oj-bind-if>
+    </div>
+    <div class="oj-flex-bar-end">
+      <oj-button 
+        id='reply-button' 
+        on-oj-action='[[ticketReply]]' 
+        disabled="[[status() === 'Closed']]">
+	      <span class='fas fa-reply'></span>
+	      Reply
+      </oj-button>
+    </div>
 	</div>
 	<!-- Reply Form -->
 </div>
@@ -198,21 +176,19 @@
 
 <!-- Modal dialog to confirm closure of the ticket -->
 <oj-dialog style="display:none" id="close-confirmation-dialog" title="Confirm Closure">
-      <div slot="body">
-             Are you sure you wish to close this ticket?
-             <oj-label for="closure-reason" class="oj-sm-padding-4x-top">Reason for closure</oj-label>
-             <oj-select-one id="closure-reason" value="{{closureReason}}">
-                   <oj-option value="Ticket Answered">Ticket answered</oj-option>
-                   <oj-option value="Workaround Provided">Workaround Provided</oj-option>
-                   <oj-option value="No longer an issue">No longer an issue</oj-option>
-                   <oj-option value="Other">Other</oj-option>
-             </oj-select-one>
-      </div>
-      <div slot="footer">
-             <oj-button id="cancel-close" on-oj-action="[[closeDialog]]">Cancel
-             </oj-button>
-             <oj-button id="confirm-close" class='oj-button-confirm' on-oj-action="[[closeTicket]]">Close
-             </oj-button>
-      </div>
+  <div slot="body">
+    Are you sure you wish to close this ticket?
+    <oj-label for="closure-reason" class="oj-sm-padding-4x-top">Reason for closure</oj-label>
+    <oj-select-one id="closure-reason" value="{{closureReason}}">
+      <oj-option value="Ticket Answered">Ticket answered</oj-option>
+      <oj-option value="Workaround Provided">Workaround Provided</oj-option>
+      <oj-option value="No longer an issue">No longer an issue</oj-option>
+      <oj-option value="Other">Other</oj-option>
+    </oj-select-one>
+  </div>
+  <div slot="footer">
+    <oj-button id="cancel-close" on-oj-action="[[closeDialog]]">Cancel</oj-button>
+    <oj-button id="confirm-close" class='oj-button-confirm' on-oj-action="[[closeTicket]]">Close</oj-button>
+  </div>
 </oj-dialog>
 
