@@ -14,7 +14,8 @@ define(
     'ojs/ojfilepicker',
     'ojs/ojselectcombobox', 
     'ojs/ojlabel',
-    'ojs/ojdialog' 
+    'ojs/ojdialog',
+    'ojs/ojgauge' 
   ],
   function (oj, ko, $, appUtils, Model, CollectionDataProvider, signals) {
     function ViewTicketViewModel(params) {
@@ -48,6 +49,8 @@ define(
       self.priority = ko.observable();
       self.closureReason = ko.observable();
 
+      // To manage rating value
+      self.closedTicketRatingValue = ko.observable();
 
       /*
       *
@@ -64,6 +67,8 @@ define(
               self.status(params.ticketModel().get('status'));
               self.attachment(params.ticketModel().get('attachment'));
               self.priority(params.ticketModel().get('priority'));
+              self.priority(params.ticketModel().get('priority'));
+              self.closedTicketRatingValue(params.ticketModel().get('ticketRating'));
               return params.ticketModel();
       });
 
@@ -108,28 +113,8 @@ define(
       })
 
 
-      /* Function to calculate date ranges */
-      self.dateDifference = function (date) {
-          var todaysDate = new Date();
-          var messageDate = new Date(date);
-          var res = Math.abs(todaysDate - messageDate) / 1000;
-          var days = Math.floor(res / 86400);
-          if (days < 1)         return "Less than a day ago";
-          else if (days === 1)  return "A day ago";
-          else if (days <= 7)   return "Less than a week ago";
-          else if (days > 7 && days <= 30) return "More than a week ago";
-          else if (days > 30)   return "More than a month ago";
-        }
-
-      /* Function to get ticket status */
-      self.ticketStatus = function (status) {
-          if (status === "Working") 
-            return "Ticket status currently 'working', our team are hard at work looking into your issue.";
-          else if (status === "Closed") 
-            return "Ticket status is 'closed', and is now in read-only mode. In order to help us continue to offer the best support we can, please rate your experience.";
-          else if (status === "Awaiting Customer Response") 
-            return "Ticket status is currently 'awaiting customer response', our team is awaiting your reply.";
-        }
+      /*To define the rating of the ticket*/
+      // self.closedTicketRatingValue(params.ticketModel().get('ticketRating'));
 
 
       /* Function to initialize the trumbowyg (textarea with more functions)*/
@@ -234,8 +219,7 @@ define(
         self.uploadedFile('');
       }
 
-      /*Evento of close ticket and change priority*/
-
+      /*Event of close ticket and change priority*/
       /* Functions to close a ticket via a signal to the ticket desk VM */
       self.confirmCloseDialog = function (event) {
             document.getElementById('close-confirmation-dialog').open();
@@ -256,6 +240,13 @@ define(
       }
 
 
+      /*Managing Rating*/
+      self.ratingValueChanged = function(event) {
+        self.closedTicketRatingValue(event.detail['value']);  
+      } 
+
+
+
       /* Utils */
       // Function to format the date
       self.formatDate = appUtils.formatDate;   
@@ -272,6 +263,30 @@ define(
       self.scrollToReply = function(){
         document.getElementById('ticket-reply-area').scrollIntoView();
       }
+
+      /* Function to calculate date ranges */
+      self.dateDifference = function (date) {
+          var todaysDate = new Date();
+          var messageDate = new Date(date);
+          var res = Math.abs(todaysDate - messageDate) / 1000;
+          var days = Math.floor(res / 86400);
+          if (days < 1)         return "Less than a day ago";
+          else if (days === 1)  return "A day ago";
+          else if (days <= 7)   return "Less than a week ago";
+          else if (days > 7 && days <= 30) return "More than a week ago";
+          else if (days > 30)   return "More than a month ago";
+        }
+
+      /* Function to get ticket status */
+      self.ticketStatus = function (status) {
+          if (status === "Working") 
+            return "Ticket status currently 'working', our team are hard at work looking into your issue.";
+          else if (status === "Closed") 
+            return "Ticket status is 'closed', and is now in read-only mode. In order to help us continue to offer the best support we can, please rate your experience.";
+          else if (status === "Awaiting Customer Response") 
+            return "Ticket status is currently 'awaiting customer response', our team is awaiting your reply.";
+        }
+
 
     }
   return ViewTicketViewModel;

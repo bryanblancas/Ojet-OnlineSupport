@@ -4,27 +4,45 @@
 		<span 	class="oj-sm-5 oj-sm-padding-4x-end oj-text-sm" 
 				data-bind="text: ticketStatus(status())"></span>
 
-		<oj-button 
-			class="oj-flex-item oj-sm-padding-1x-end" 
-			on-oj-action="[[scrollToReply]]">
-			<span class='fas fa-reply'></span>
-			Reply
-		</oj-button>
+    <oj-bind-if test="[[status() != 'Closed']]">
+  		<oj-button 
+  			class="oj-flex-item oj-sm-padding-1x-end" 
+  			on-oj-action="[[scrollToReply]]">
+  			<span class='fas fa-reply'></span>
+  			Reply
+  		</oj-button>
 
-		<oj-button 
-			class="oj-flex-item oj-sm-padding-1x-end"
-			on-oj-action='[[escalatePriority]]'
-       		disabled="[[priority() === 1]]">
-			<span class='fas fa-hand-point-up'></span>
-			Escalate Priority
-		</oj-button>
+  		<oj-button 
+  			class="oj-flex-item oj-sm-padding-1x-end"
+  			on-oj-action='[[escalatePriority]]'
+         		disabled="[[priority() === 1]]">
+  			<span class='fas fa-hand-point-up'></span>
+  			Escalate Priority
+  		</oj-button>
 
-		<oj-button 
-			class="oj-flex-item oj-sm-padding-1x-end"
-			on-oj-action='[[confirmCloseDialog]]'>
-       		<span class='fas fa-times-circle'></span>
-			Close Ticket
-		</oj-button>
+  		<oj-button 
+  			class="oj-flex-item oj-sm-padding-1x-end"
+  			on-oj-action='[[confirmCloseDialog]]'>
+         		<span class='fas fa-times-circle'></span>
+  			Close Ticket
+  		</oj-button>
+    </oj-bind-if>
+    
+    <!-- Rating Module -->
+    <oj-bind-if test="[[status() == 'Closed']]">
+      <div class="oj-sm-6 oj-flex oj-sm-justify-content-flex-end">
+         <oj-rating-gauge
+            id="closed-ticket-rating"
+            class="oj-sm-6 oj-flex-item"
+            value="{{closedTicketRatingValue}}"
+            on-value-changed="[[ratingValueChanged]]"
+            selected-state.color="#E74C3C"
+            readonly="[[closedTicketRatingValue() > 0]]"
+            style="height:30px;">
+         </oj-rating-gauge>
+      </div>
+    </oj-bind-if>
+    <!-- Rating Module -->
 
 	</div>
 	<!-- Ticket staus, rating and buttons -->
@@ -167,10 +185,10 @@
             </oj-bind-if>
         </div>
         <div class="oj-flex-bar-end">
-            <oj-button id='reply-button' on-oj-action='[[ticketReply]]'>
-				<span class='fas fa-reply'></span>
-				Reply
-			</oj-button>
+          <oj-button id='reply-button' on-oj-action='[[ticketReply]]' disabled="[[status() === 'Closed']]">
+			      <span class='fas fa-reply'></span>
+			      Reply
+		       </oj-button>
         </div>
 	</div>
 	<!-- Reply Form -->
