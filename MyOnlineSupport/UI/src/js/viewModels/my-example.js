@@ -90,13 +90,6 @@ define(
          });
       }
 
-
-      /*
-      *
-      * TAB BAR CONTROLING
-      *
-      */
-
       /* List selection listener */
       self.listSelectionChanged = function () {
           self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
@@ -112,9 +105,30 @@ define(
           }
           self.selectedTicketRepId(self.selectedTicketModel().get('representativeId'));
           self.selectedBarItem(self.selectedTicket()[0]);
+          document.getElementById("search-component").resetSearch();       
         }
 
+
+     /*
+      *
+      * TAB BAR CONTROLING
+      *
+      */
+
       self.tabBarDataSource = new oj.ArrayTableDataSource(self.tabData, { idAttribute: 'id' });
+
+      self.tabSelectionChanged = function () {
+        if(self.ticketList().get(self.selectedBarItem()) === undefined){
+            document.getElementById("search-component").resetSearch();
+        }
+        oj.Context.getContext(document.getElementById("search-component"))
+        .getBusyContext()
+        .whenReady()
+        .then(function () {
+           self.selectedTicketModel(self.ticketList().get(self.selectedBarItem()))
+           self.selectedTicket([self.selectedBarItem()])
+        })
+      }
 
       self.deleteTab = function (id) {
         var hnavlist = document.getElementById('ticket-tab-bar');

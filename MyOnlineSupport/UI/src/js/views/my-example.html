@@ -54,6 +54,7 @@
           contextmenu="tabmenu"
           id="ticket-tab-bar"
           selection="{{selectedBarItem}}"
+          on-selection-changed="[[tabSelectionChanged]]"
           edge="top"
           data="[[tabBarDataSource]]"
           on-oj-remove="[[onTabRemove]]"
