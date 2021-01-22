@@ -49,7 +49,8 @@
         'chai': 'libs/chai/chai-4.2.0',
         'regenerator-runtime' : 'libs/regenerator-runtime/runtime',
         'appUtils': 'utils/app-utils',
-        'trumbowyg': ''
+        'trumbowyg': '',
+        'inline-search': 'jet-composites/inline-search/1.0.0'
       }
       // endinjector
     }

@@ -3,8 +3,14 @@
   <!-- Left Column Start-->
   <div class="oj-sm-3 left-column-container">
     
-    <!-- Search functionality -->
-    <oj-input-text class="oj-sm-12 oj-sm-padding-3x-vertical oj-sm-padding-2x-horizontal" placeholder="Search"></oj-input-text>
+    <!-- Search functionality -->  
+    <inline-search
+      id="search-component"
+      data="{{ticketList}}"
+      on-data-changed="[[updateDataSource]]"
+      models="[[persistentModels]]"
+      filter-attribute='[[filterAttribute]]'>
+    </inline-search>
     <!-- Search functionality -->
 
     <div id="mainList" class="oj-flex">

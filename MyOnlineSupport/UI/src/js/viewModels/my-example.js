@@ -11,7 +11,8 @@ define(
    'ojs/ojselectsingle',
    'ojs/ojlistitemlayout',
    'ojs/ojvalidation-datetime',
-   'ojs/ojinputtext'
+   'ojs/ojinputtext',
+   'inline-search/loader'
   ],
   function (accUtils, ko, $, Model, CollectionDataProvider, appUtils, signals)   {
     function myExampleViewModel() {
@@ -33,6 +34,11 @@ define(
       // Signals to manage events to the tickets
       self.closeTicketSignal = new signals.Signal();
       self.updatePrioritySignal = new signals.Signal();
+
+      // For search component
+      self.persistentModels = ko.observableArray();
+      self.filterAttribute = 'title';
+      self.selectionRequired = ko.observable(true);
 
       /*
       *
@@ -62,6 +68,29 @@ define(
       self.ticketList = ko.observable(new ticketsCollection());
       self.ticketsDataProvider(new CollectionDataProvider(self.ticketList()));
 
+
+      /*
+      *
+      * Getting collection for search component
+      *
+      */
+      self.ticketList().fetch({
+        success: function success(data) {
+            self.persistentModels(data.models);
+            console.log("fetching ticket List");
+        }
+      });
+
+      self.updateDataSource = function(event){
+         self.selectionRequired(false);
+         self.ticketsDataProvider(new CollectionDataProvider(self.ticketList()));
+         var busyContext = oj.Context.getPageContext().getBusyContext();
+         busyContext.whenReady().then(function () {
+          self.selectionRequired(true);
+         });
+      }
+
+
       /*
       *
       * TAB BAR CONTROLING
@@ -88,10 +117,10 @@ define(
       self.tabBarDataSource = new oj.ArrayTableDataSource(self.tabData, { idAttribute: 'id' });
 
       self.deleteTab = function (id) {
-        var hnavlist = document.getElementById('ticket-tab-bar'),
+        var hnavlist = document.getElementById('ticket-tab-bar');
         items = self.tabData();
         for (var i = 0; i < items.length; i++) {
-          if (items[i].id === id) {
+          if(id != self.persistentModels()[0].get('id')){
             self.tabData.splice(i, 1);
             oj.Context.getContext(hnavlist)
               .getBusyContext()
