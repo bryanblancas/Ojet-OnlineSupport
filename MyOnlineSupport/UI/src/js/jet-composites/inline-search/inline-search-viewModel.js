@@ -43,7 +43,6 @@ define(
         /* Function to handle the filtering of the collection when a user enters a value into the search box */
         self.searchTerm.subscribe(function (newValue) {
             if (newValue.length == 0) {
-                console.log("About to clone original collections as newValue is null")
                 var clonedCollection = self.collectionToBeFiltered().clone();
                 clonedCollection.reset(self.persistentModels);
                 context.properties.data = clonedCollection;
@@ -65,7 +64,6 @@ define(
 
     InlineSearchModel.prototype._resetSearch = function () {
         this.searchTerm('');
-        console.log("HOOALAAAAAAAAAAAAAAAAAAAA");
     };
     
     //Lifecycle methods - uncomment and implement if necessary 

@@ -96,7 +96,6 @@ define(
 
       var ticketRepliesCollection = oj.Collection.extend({
         customURL: function () {
-          console.log("Inside ticketRepliessCollection: CustomURL");
           var retObj = {};
           retObj['url'] = "http://localhost:8080/tickets/replies/" + self.ticketId()
           return retObj
@@ -108,7 +107,6 @@ define(
       self.ticketRepliesDataSource(new oj.CollectionTableDataSource(self.ticketReplies));
       
       self.ticketId.subscribe(function(){
-        console.log("Inside ticketIdSubscribe");
         self.ticketReplies.fetch();
         /* Clean the text area and the uploadedFile*/
         $('#ticket-reply-area').trumbowyg('empty');
@@ -133,13 +131,11 @@ define(
       /* Promise to call the file upload function 
       This means that the function that calls this function will wait for the response*/
       self.uploadFile = function () {
-        console.log("Inside uploadFile");
         return new Promise(
             function (resolve, reject) {
                 var file = $( "#fileUpload" ).find( "input" )[0].files[0];
                 var data = new FormData();
                 data.append("file", file);
-                console.log("Inside promise");
                 $.ajax({
                     type: "POST",
                     url: "http://localhost:8080/tickets/upload/" + self.ticketId(),                    
@@ -148,7 +144,6 @@ define(
                     data: data,
                     success: function (result) {
                         resolve("success")
-                        console.log("File uploaded successfully!");
                     },
                     error: function (err, status, errorThrown) {
                         reject(err);
@@ -169,10 +164,8 @@ define(
         var date = new Date();
         var attachment = [];
 
-        console.log("Inside ticketReply");
 
         if(self.uploadedFile()[0] != null){
-          console.log("About to upload file");
           self.uploadFile().then(
             function(success){
               attachment = [{
@@ -188,32 +181,26 @@ define(
             });
         }
         else{
-          console.log("No file selected. Add ticketreply");
           self.addTicketReplyToCollection(attachment, date);
         }
       }
 
       /* Function to build up the ticket reply and add it to the collection */
       self.addTicketReplyToCollection = function(attachment, date){
-        console.log("Inside addTicketReplyToCollection");
         var newReply = {
             "author": "Charlotte Illidge",
             "timestamp": date.toISOString(),
             "note": $('#ticket-reply-area').trumbowyg('html'),
             "attachment": attachment
         };
-        console.log("Inside addTicketReplyToCollection: before create");
-        console.log(newReply);
         self.ticketReplies.create(newReply, {
             wait: true,
             success: function(model, response, options){
-                console.log("Success to create ticketReply");
             },
             error: function(err, status, errorThrown){
                 console.error("Error");
             }
         });
-        console.log("Inside addTicketReplyToCollection: after create");
         $('#ticket-reply-area').trumbowyg('empty');
         self.uploadedFile('');
       }

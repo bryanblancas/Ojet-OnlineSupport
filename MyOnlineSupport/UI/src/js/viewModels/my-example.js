@@ -40,6 +40,11 @@ define(
       self.filterAttribute = 'title';
       self.selectionRequired = ko.observable(true);
 
+      // For creation of tickets
+      self.createVisible = ko.observable(false)
+      self.newTicketId = '';
+      self.createNewTicketSignal = new signals.Signal();
+
       /*
       *
       * GETTING TICKETS
@@ -77,7 +82,6 @@ define(
       self.ticketList().fetch({
         success: function success(data) {
             self.persistentModels(data.models);
-            console.log("fetching ticket List");
         }
       });
 
@@ -154,6 +158,21 @@ define(
 
 
       /*
+      *
+      * CREATION PF TICKETS
+      *
+      */
+
+      
+      // Toggle the state of the create ticket module
+      self.toggleCreateTicket = function () {
+        if(self.createVisible() == true)
+          self.createVisible(false);
+        else
+          self.createVisible(true);
+      }
+
+      /*
       * Logic for signals
       * These functions are executed each time that in view-ticket.js occurs a dispatch
       */
@@ -171,11 +190,9 @@ define(
         modelItem.save(updatedData, {
           wait: true,
           success: function (model, response, options) {
-            console.log('UpdatePrioritySignal ModelItem Save success');
             self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]))
           },
           error: function (jqXHR) {
-            console.log('Error');
           }
         });
       });
@@ -192,11 +209,9 @@ define(
         modelItem.save(updatedData, {
           wait:true,
           success: function (model, response, options) {
-            console.log('closeTicketSignal ModelItem Save success');
             self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]))
           },
           error: function (jqXHR) {
-            console.log('Error');
           }
         });
       })

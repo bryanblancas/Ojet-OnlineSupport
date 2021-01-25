@@ -65,6 +65,20 @@
             </oj-menu>
          </oj-tab-bar>
         </div>
+        <div class="oj-flex oj-sm-3 oj-sm-justify-content-flex-end oj-sm-padding-4x-end">
+          <oj-bind-if test="[[!createVisible()]]">
+            <oj-button on-oj-action="[[toggleCreateTicket]]">
+              <span class='fas fa-plus'></span>
+              Create New Ticket
+            </oj-button>
+          </oj-bind-if>
+          <oj-bind-if test="[[createVisible]]">
+            <oj-button on-oj-action="[[toggleCreateTicket]]">
+              <span class='fas fa-ban'></span>
+              Cancel
+            </oj-button>
+          </oj-bind-if>
+        </div>
       </div>
       <!-- ITEM TEMPLATE -->
       <script type="text/html" id="tab-template">
@@ -75,6 +89,20 @@
         </li>
       </script>
       <!-- Tab Bar End -->
+
+      <!-- Create New Ticket Module -->
+      <oj-bind-if test="[[createVisible]]">
+        <div 
+          data-bind="ojModule: { 
+            name: 'create-ticket',
+            params: {
+              createNewTicketSignal: createNewTicketSignal,
+              newTicketId: newTicketId
+            }
+          }">
+        </div>
+      </oj-bind-if>
+      <!-- Create New Ticket Module -->
 
       <!-- Selected Ticket View -->
       <div class="oj-flex">
