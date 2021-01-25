@@ -165,11 +165,16 @@ define(
 
       
       // Toggle the state of the create ticket module
+      // and exit animation
       self.toggleCreateTicket = function () {
-        if(self.createVisible() == true)
-          self.createVisible(false);
-        else
+        if (self.createVisible() === true) {
+          oj.AnimationUtils['slideOut']($('#create-new-ticket')[0], { 'direction': 'top' }).then(function () {
+            self.createVisible(false);
+          });
+        } 
+        else {
           self.createVisible(true);
+        }
       }
 
       /*
