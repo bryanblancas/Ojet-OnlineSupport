@@ -88,7 +88,6 @@ define(
             // 0 is the lowest id and 5 is the highest id
             let index = parseInt(data.models.length-1);
             self.newTicketId = data.models[parseInt(index)].id + 1;
-            console.log("Ticket List Fetch: newTicketId: "+self.newTicketId);
         }
       });
 
@@ -191,23 +190,17 @@ define(
 
       /* New ticket creation listener*/
       self.createNewTicketSignal.add(function(newModel){
-        console.log("New model has come: ");
-        console.log(newModel);
         self.ticketList().create(newModel,{
           wait: true,
           // Specify index where the newModel will be created. With 0
           // we ensuring that it'll appear at the top of the list
           at: 0,
           success: function (model, response, options) {
-            console.log("about ot create the new model: ");
-            console.log(model);
             self.toggleCreateTicket();
             self.persistentModels.push(model);
             // Since I'm forcing to add the new ticket at the beggining of the array
             // the current highest value is at index 0, that's why is hardcoded the index
             self.newTicketId = self.ticketList().models[0].id + 1;
-            console.log(self.newTicketId);
-            console.log("success creating new ticket from my-example.js");
           },
           error: function (err, status, errorThrown) {
             console.error("Error");
