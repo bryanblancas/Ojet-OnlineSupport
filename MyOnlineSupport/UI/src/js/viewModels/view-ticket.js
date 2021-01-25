@@ -128,32 +128,6 @@ define(
         };
 
 
-      /* Promise to call the file upload function 
-      This means that the function that calls this function will wait for the response*/
-      self.uploadFile = function () {
-        return new Promise(
-            function (resolve, reject) {
-                var file = $( "#fileUpload" ).find( "input" )[0].files[0];
-                var data = new FormData();
-                data.append("file", file);
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:8080/tickets/upload/" + self.ticketId(),                    
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        resolve("success")
-                    },
-                    error: function (err, status, errorThrown) {
-                        reject(err);
-                        console.error("Error")
-                    }
-                });
-            }
-        )
-      }
-
       self.fileSelectionListener = function(event){
         var file = event.detail.files;
         self.uploadedFile(file);
@@ -163,22 +137,15 @@ define(
       self.ticketReply = function (){
         var date = new Date();
         var attachment = [];
-
-
         if(self.uploadedFile()[0] != null){
-          self.uploadFile().then(
-            function(success){
-              attachment = [{
-                "filePath": self.uploadedFile()[0].name,
-                "fileSize": bytesToSize(self.uploadedFile()[0].size),
-                "timestamp": date.toISOString()
-              }]
-              self.addTicketReplyToCollection(attachment, date);
-            })
-            .catch(
-              function(error){
-                console.error("Error uploading file");
-            });
+          appUtils.uploadAttachment(self.ticketId, self.uploadedFile()[0])
+          .then(function (attachment){
+            attachment = attachment;
+            self.addTicketReplyToCollection(attachment, date);
+          })
+          .catch(function (error){
+            console.error("ERROR");
+          })
         }
         else{
           self.addTicketReplyToCollection(attachment, date);
@@ -198,7 +165,7 @@ define(
             success: function(model, response, options){
             },
             error: function(err, status, errorThrown){
-                console.error("Error");
+              console.error("Error");
             }
         });
         $('#ticket-reply-area').trumbowyg('empty');
@@ -236,14 +203,6 @@ define(
       // Function to format the date
       self.formatDate = appUtils.formatDate;   
 
-      // Function to convert bytes to size
-      function bytesToSize(bytes) {
-        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        if (bytes == 0) return 'n/a';
-          var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-          return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-      };
-
       /* Function to automatically scroll the user to the reply editor */
       self.scrollToReply = function(){
         document.getElementById('ticket-reply-area').scrollIntoView();
@@ -270,6 +229,9 @@ define(
             return "Ticket status is 'closed', and is now in read-only mode. In order to help us continue to offer the best support we can, please rate your experience.";
           else if (status === "Awaiting Customer Response") 
             return "Ticket status is currently 'awaiting customer response', our team is awaiting your reply.";
+          else if (status === "New") {
+            return "This is a new ticket that will be looked into shortly by a member of the team. Please check back soon.";
+}
         }
 
 
