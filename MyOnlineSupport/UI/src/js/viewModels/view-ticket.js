@@ -50,6 +50,11 @@ define(
       */
       self.closeTicketSignal = params.closeTicketSignal;
       self.updatePrioritySignal = params.updatePrioritySignal;
+      // Messages should also be set up for ticket replies, but as this 
+      // functionality is within a different module from the one in which the 
+      // applicationMessages array is defined, we must use a signal 
+      // to inform the ticket-desk ViewModel of any activity
+      self.ticketReplyFailure = params.ticketReplyFailure
 
       // Variables to store priority of the ticket and the reason of the closure
       self.priority = ko.observable();
@@ -145,6 +150,8 @@ define(
           })
           .catch(function (error){
             oj.Logger.error('Error creating new ticket: ' + err.status + ' ' + err.statusText);
+            // Dispatch the signal to perform the actions defined in my-example.js
+            self.ticketReplyFailure.dispatch();
           })
         }
         else{
@@ -166,6 +173,8 @@ define(
             },
             error: function(err, status, errorThrown){
               oj.Logger.error('Error creating new ticket: ' + err.status + ' ' + err.statusText);
+              // Dispatch the signal to perform the actions defined in my-example.js
+              self.ticketReplyFailure.dispatch();
             }
         });
         $('#ticket-reply-area').trumbowyg('empty');

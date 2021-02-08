@@ -112,7 +112,8 @@
                             params: {
                               ticketModel: selectedTicketModel,
                               closeTicketSignal: closeTicketSignal, 
-                              updatePrioritySignal: updatePrioritySignal
+                              updatePrioritySignal: updatePrioritySignal,
+                              ticketReplyFailure: ticketReplyFailure
                             }
                           }"
               class="oj-sm-padding-4x">
@@ -134,3 +135,18 @@
   <!-- Right Column End -->
 
 </div>
+
+
+
+<!-- Start Messages Component -->
+<oj-messages
+  id="application-messages"
+  messages="{{applicationMessages}}"
+  display="notification"
+  position='{
+    "my": {"vertical" : "bottom", "horizontal": "end"},
+    "at": {"vertical": "bottom", "horizontal": "end"},
+    "of": "window"
+  }'>
+</oj-messages>
+<!-- End Messages Component -->

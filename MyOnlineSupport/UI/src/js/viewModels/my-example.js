@@ -12,7 +12,8 @@ define(
    'ojs/ojlistitemlayout',
    'ojs/ojvalidation-datetime',
    'ojs/ojinputtext',
-   'inline-search/loader'
+   'inline-search/loader',
+   'ojs/ojmessages'
   ],
   function (accUtils, ko, $, Model, CollectionDataProvider, appUtils, signals)   {
     function myExampleViewModel() {
@@ -34,6 +35,7 @@ define(
       // Signals to manage events to the tickets
       self.closeTicketSignal = new signals.Signal();
       self.updatePrioritySignal = new signals.Signal();
+      self.ticketReplyFailure = new signals.Signal();
 
       // For search component
       self.persistentModels = ko.observableArray();
@@ -44,6 +46,9 @@ define(
       self.createVisible = ko.observable(false)
       self.newTicketId = '';
       self.createNewTicketSignal = new signals.Signal();
+
+      // For messages in UI
+      self.applicationMessages = ko.observableArray([]);
 
       /*
       *
@@ -188,6 +193,17 @@ define(
       * These functions are executed each time that occurs a dispatch in other module
       */
 
+      /* Ticket Reply Failure listener */
+      self.ticketReplyFailure.add(function () {
+        self.applicationMessages.push(
+          {
+            severity: 'error',
+            summary: 'Error replying to ticket',
+            detail: 'Unable to reply to ticket, please try again.'
+          }
+        )
+      });
+
       /* New ticket creation listener*/
       self.createNewTicketSignal.add(function(newModel){
         self.ticketList().create(newModel,{
@@ -202,9 +218,23 @@ define(
             // the current highest value is at index 0, that's why is hardcoded the index
             self.newTicketId = self.ticketList().models[0].id + 1;
             oj.Logger.info('New ticket successfully created: ' + model.id);
+            self.applicationMessages.push(
+              {
+                severity: 'confirmation',
+                summary: 'New ticket created',
+                detail: 'The new ticket ' + model.id + ' has been created'
+              }
+            )
           },
           error: function (err, status, errorThrown) {
             oj.Logger.error('Error creating new ticket: ' + err.status + ' ' + err.statusText);
+            self.applicationMessages.push(
+              {
+                severity: 'error',
+                summary: 'Error creating ticket',
+                detail: 'Error trying to create new ticket'
+              }
+            )
           }
         });
       });
@@ -222,9 +252,23 @@ define(
         modelItem.save(updatedData, {
           wait: true,
           success: function (model, response, options) {
-            self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]))
+            self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
+            self.applicationMessages.push(
+              {
+                severity: 'confirmation',
+                summary: 'Priority increased',
+                detail: 'The ticket ' + model.id + ' has had its priority increased to ' + newPriority
+              }
+            )
           },
           error: function (jqXHR) {
+            self.applicationMessages.push(
+              {
+                severity: 'error',
+                summary: 'Error updating ticket',
+                detail: 'Unable to increase priority for ticket ' + modelData.id
+              }
+            )
           }
         });
       });
@@ -241,9 +285,23 @@ define(
         modelItem.save(updatedData, {
           wait:true,
           success: function (model, response, options) {
-            self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]))
+            self.selectedTicketModel(self.ticketList().get(self.selectedTicket()[0]));
+            self.applicationMessages.push(
+              {
+                severity: 'confirmation',
+                summary: 'Ticket Closed',
+                detail: 'The ticket ' + model.id + ' has been successfully closed'
+              }
+            )
           },
           error: function (jqXHR) {
+            self.applicationMessages.push(
+              {
+                severity: 'error',
+                summary: 'Error closing ticket',
+                detail: 'Unable to close ticket ' + modelData.id
+              }
+            )
           }
         });
       })
