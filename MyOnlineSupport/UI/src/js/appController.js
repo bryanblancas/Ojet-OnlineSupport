@@ -74,7 +74,7 @@ define(['knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockouttemplateutils',
       // User Info used in Global Navigation area
       this.userLogin = ko.observable("john.hancock@oracle.com");
 
-      oj.Logger.info('New ticket successfully created: ' + model.id);
+      oj.Logger.option("level",  oj.Logger.LEVEL_INFO);
 
       // Footer
       // this.footerLinks = [
