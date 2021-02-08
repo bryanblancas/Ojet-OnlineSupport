@@ -201,9 +201,10 @@ define(
             // Since I'm forcing to add the new ticket at the beggining of the array
             // the current highest value is at index 0, that's why is hardcoded the index
             self.newTicketId = self.ticketList().models[0].id + 1;
+            oj.Logger.info('New ticket successfully created: ' + model.id);
           },
           error: function (err, status, errorThrown) {
-            console.error("Error");
+            oj.Logger.error('Error creating new ticket: ' + err.status + ' ' + err.statusText);
           }
         });
       });

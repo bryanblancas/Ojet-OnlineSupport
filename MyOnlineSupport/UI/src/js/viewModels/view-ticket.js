@@ -144,7 +144,7 @@ define(
             self.addTicketReplyToCollection(attachment, date);
           })
           .catch(function (error){
-            console.error("ERROR");
+            oj.Logger.error('Error creating new ticket: ' + err.status + ' ' + err.statusText);
           })
         }
         else{
@@ -165,7 +165,7 @@ define(
             success: function(model, response, options){
             },
             error: function(err, status, errorThrown){
-              console.error("Error");
+              oj.Logger.error('Error creating new ticket: ' + err.status + ' ' + err.statusText);
             }
         });
         $('#ticket-reply-area').trumbowyg('empty');
