@@ -23,34 +23,54 @@ define(['ojs/ojcore',
 		self.newTicketId = params.newTicketId;
 		self.createInProgress = ko.observable(false);
 
+        // Variable to validation
+        self.messageTextEmpty = ko.observable(false);
+
 
 		/* Function to create a new ticket */
 		self.createTicket = function () {
-            var date = new Date();
-            var messageArea = $('#new-ticket-area').trumbowyg('html');
-            self.createInProgress(true);
-            var newTicket = {
-                "id": self.newTicketId,
-                "title": self.newTicketTitle(),
-                "author": "Charlotte Illidge",
-                "representativeId": "1",
-                "priority": self.newTicketPriority(),
-                "service": "stylearchive",
-                "dateCreated": date.toISOString(),
-                "status": "New",
-                "message": messageArea,
-                "attachment": [],
-                "ticketRating": -1
+            // Add validation to the text field. This work with the required attribute of 
+            // the ojinputtext html tag
+            var titleInputBox = document.getElementById('title');
+            titleInputBox.validate();
+
+            if ($('#new-ticket-area').trumbowyg('html') === '') {
+                $('#new-ticket-area').parent().addClass("trumbowyg-invalid");
+                self.messageTextEmpty(true)
+            } else {
+                self.messageTextEmpty(false)
             }
-            if (self.uploadedFile()[0] != null) {
-                appUtils.uploadAttachment(self.newTicketId, self.uploadedFile()[0])
-                .then(function (attachment) {
-                        newTicket['attachment'] = attachment;
-                        self.createNewTicketSignal.dispatch(newTicket);
-                    });
+            
+            if(titleInputBox.valid === 'valid' && !self.messageTextEmpty()){
+                self.messageTextEmpty(false)
+                $('#new-ticket-area').parent().removeClass("trumbowyg-invalid");
+
+                var date = new Date();
+                var messageArea = $('#new-ticket-area').trumbowyg('html');
+                self.createInProgress(true);
+                var newTicket = {
+                    "id": self.newTicketId,
+                    "title": self.newTicketTitle(),
+                    "author": "Charlotte Illidge",
+                    "representativeId": "1",
+                    "priority": self.newTicketPriority(),
+                    "service": "stylearchive",
+                    "dateCreated": date.toISOString(),
+                    "status": "New",
+                    "message": messageArea,
+                    "attachment": [],
+                    "ticketRating": -1
                 }
-            else {
-                self.createNewTicketSignal.dispatch(newTicket);
+                if (self.uploadedFile()[0] != null) {
+                    appUtils.uploadAttachment(self.newTicketId, self.uploadedFile()[0])
+                    .then(function (attachment) {
+                            newTicket['attachment'] = attachment;
+                            self.createNewTicketSignal.dispatch(newTicket);
+                        });
+                    }
+                else {
+                    self.createNewTicketSignal.dispatch(newTicket);
+                }
             }
         }
         // When the user selects a file, this fuctions will assing that file
