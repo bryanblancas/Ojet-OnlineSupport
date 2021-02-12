@@ -11,18 +11,24 @@ define([
         // specify how you want to handle null values here
         const replacer = (key, value) => value === null ? '' : value;
 
-        // To headers only get the keys from the first element of the jsonData
+        // To now the headers only get the keys from the first element of the jsonData
         const header = Object.keys(jsonData[0]);
 
         // Using map, map every element in the json object to his respective place
         let csv = jsonData.map(
+            // For each row (JSON object in JSON object Array [jsonData]) join the array with commas
             row => header.map(
+              // For each attribute, search for the value of the key and apply replacer function
+              // Ex. jsonData[2].title JSON object 2 of the array, in the key 'title' apply the function to the value
               fieldName => JSON.stringify(row[fieldName], replacer)
             ).join(',')
           );
-
+        
+        // To the beggining of all the array, add the header (name of the columns)
+        // as a single string joined with comma
         csv.unshift(header.join(','));
         
+        // Create a single string with all the data joined by newline (rows of the csv)
         csv = csv.join('\r\n');
 
         return csv;
