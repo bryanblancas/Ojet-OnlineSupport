@@ -8,11 +8,16 @@
 /*
  * Your customer ViewModel code goes here
  */
-define(['accUtils'],
- function(accUtils) {
+define([
+    'ojs/ojcore',
+    'knockout',
+    'accUtils'],
+ function(oj, ko, accUtils) {
     function CustomerViewModel() {
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
+
+      self.k  = ko.observable('Esto es un texto de prueba\n que tuve que haber puesto después');
 
       /**
        * Optional ViewModel method invoked after the View is inserted into the
@@ -25,6 +30,10 @@ define(['accUtils'],
       this.connected = () => {
         accUtils.announce('Customers page loaded.', 'assertive');
         document.title = "Customers";
+
+        //  var x = document.getElementById('prueba');
+        // console.log(x);   
+
         // Implement further logic if needed
       };
 
@@ -32,6 +41,9 @@ define(['accUtils'],
        * Optional ViewModel method invoked after the View is disconnected from the DOM.
        */
       this.disconnected = () => {
+
+        //  var x = document.getElementById('prueba');
+        // console.log(x);   
         // Implement if needed
       };
 
@@ -40,6 +52,9 @@ define(['accUtils'],
        * That includes any possible animation between the old and the new View.
        */
       this.transitionCompleted = () => {
+        
+         var x = document.getElementById('prueba');
+        console.log(x);   
         // Implement if needed
       };
     }

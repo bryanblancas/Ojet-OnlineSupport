@@ -15,6 +15,8 @@ define(['accUtils',
 
       self.activityDataProvider = ko.observable();
 
+      self.spanTitle = ko.observable("Prueba de título");
+      
       // Get Activities objects from file using jQuery method and a method to return a Promise
       $.getJSON(url).then(function(data) {
           // Create variable for Activities list and populate using key attribute fetch
