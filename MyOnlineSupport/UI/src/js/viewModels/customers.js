@@ -10,18 +10,39 @@
  */
 define(['ojs/ojcore',
         'accUtils',
-        'text!./cubedata.json',
-        'appUtils',],
- function(oj, accUtils, jsonData, appUtils) {
+        'appUtils'],
+ function(oj, accUtils, appUtils) {
     function CustomerViewModel() {
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
 
       var information = null;
-
+      var jsonData = [{
+          "index": 0,
+          "Units": 80,
+          "Sales": 535,
+          "Tax": 0.0234,
+          "year": "2014",
+          "gender": "Male",
+          "product": "Coupe",
+          "city": "New York",
+          "drivetrain": "AWD",
+          "color": "Red"
+      }, {
+          "index": 1,
+          "Units": 95,
+          "Sales": 610,
+          "Tax": 0.0721,
+          "year": "2015",
+          "gender": "Male",
+          "product": "Coupe",
+          "city": "New York",
+          "drivetrain": "AWD",
+          "color": "Red"
+      }];
+      
       self.onButtonPressed = function(){
-        information = document.getElementById("information").textContent;
-        appUtils.createAndDownloadFile(information, "prueba.csv", "text/csv");
+        appUtils.createAndDownloadFile(appUtils.JSONtoCSV(jsonData), "prueba.csv", "text/csv");
       }
 
       /**

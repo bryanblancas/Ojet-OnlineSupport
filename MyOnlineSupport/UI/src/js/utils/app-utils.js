@@ -6,6 +6,28 @@ define([
     function appUtils() {
       var self = this;
 
+      // Function to get CSV from JSON
+      self.JSONtoCSV = function(jsonData){
+        // specify how you want to handle null values here
+        const replacer = (key, value) => value === null ? '' : value;
+
+        // To headers only get the keys from the first element of the jsonData
+        const header = Object.keys(jsonData[0]);
+
+        // Using map, map every element in the json object to his respective place
+        let csv = jsonData.map(
+            row => header.map(
+              fieldName => JSON.stringify(row[fieldName], replacer)
+            ).join(',')
+          );
+
+        csv.unshift(header.join(','));
+        
+        csv = csv.join('\r\n');
+
+        return csv;
+      }
+
       // Function to create and download a file with the given data 
       self.createAndDownloadFile = function(data, name, type){
         /******************************** 
