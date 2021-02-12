@@ -9,13 +9,16 @@
  * Your customer ViewModel code goes here
  */
 define(['ojs/ojcore',
-        'accUtils'],
- function(oj, accUtils) {
+        'accUtils',
+      'text!./cubedata.json'],
+ function(oj, accUtils, jsonData) {
     function CustomerViewModel() {
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
 
       var information = null;
+
+      console.log(jsonData);
 
       self.onButtonPressed = function(){
         information = document.getElementById("information").textContent;
