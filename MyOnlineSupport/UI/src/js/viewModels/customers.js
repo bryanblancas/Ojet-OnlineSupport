@@ -14,6 +14,18 @@ define(['accUtils'],
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
 
+      var information = null;
+
+      // Triying to create file
+      self.createFile = function(data){
+        console.log(data);
+      }
+
+      self.onButtonPressed = function(){
+        information = document.getElementById("information").textContent;
+        createFile(information);
+      }
+
       /**
        * Optional ViewModel method invoked after the View is inserted into the
        * document DOM.  The application can put logic that requires the DOM being
