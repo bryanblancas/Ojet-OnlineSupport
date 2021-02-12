@@ -6,6 +6,38 @@ define([
     function appUtils() {
       var self = this;
 
+      // Function to create and download a file with the given data 
+      self.createAndDownloadFile = function(data, name, type){
+        /******************************** 
+         * Create the file object (blob)
+        *********************************/
+        // https://developer.mozilla.org/es/docs/Web/API/Blob/Blob
+        // https://www.iana.org/assignments/media-types/media-types.xhtml#text
+        let file = new Blob([data], {type: type});
+
+        /******************************** 
+         * Create the object URL
+        *********************************/
+        // https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
+        let url = URL.createObjectURL(file);
+
+        /******************************** 
+         * Create dummy element a to download the file
+         * with the attribute 'download'
+        *********************************/
+        let a = document.createElement("a");
+        // Assign the URL object to the new tag 'a' just created
+        a.href = url;
+        // Download attribute specifies that the target 
+        // will be downloaded when a user clicks on the hyperlink
+        a.download = name;
+        // Manually 'click' the hyperlink
+        a.click();
+
+        // Release the url object
+        URL.revokeObjectURL(url);
+      }
+
       /* Function to upload the new attachment and return a promise */
       self.uploadAttachment = function (ticketId, uploadedFile) {
           var date = new Date();
