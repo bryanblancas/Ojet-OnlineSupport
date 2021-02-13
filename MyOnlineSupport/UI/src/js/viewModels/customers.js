@@ -8,42 +8,41 @@
 /*
  * Your customer ViewModel code goes here
  */
-define(['ojs/ojcore',
-        'accUtils',
-        'appUtils'],
- function(oj, accUtils, appUtils) {
+define(
+      ['accUtils',
+       'knockout',
+       'jquery',
+       'ojs/ojmodel',
+       'ojs/ojcollectiondataprovider',
+       'appUtils',
+      ],
+  function (accUtils, ko, $, Model, CollectionDataProvider, appUtils)   {
     function CustomerViewModel() {
+      self = this;
       // Below are a set of the ViewModel methods invoked by the oj-module component.
       // Please reference the oj-module jsDoc for additional information.
+      var data = null;
+      var url = "http://localhost:8080/consumeJSON";
 
-      var information = null;
-      var jsonData = [{
-          "index": 0,
-          "Units": 80,
-          "Sales": 535,
-          "Tax": 0.0234,
-          "year": "2014",
-          "gender": "Male",
-          "product": "Coupe",
-          "city": "New York",
-          "drivetrain": "AWD",
-          "color": "Red"
-      }, {
-          "index": 1,
-          "Units": 95,
-          "Sales": 610,
-          "Tax": 0.0721,
-          "year": "2015",
-          "gender": "Male",
-          "product": "Coupe",
-          "city": "New York",
-          "drivetrain": "AWD",
-          "color": "Red"
-      }];
-      
+      // Event of the button
       self.onButtonPressed = function(){
-        appUtils.createAndDownloadFile(appUtils.JSONtoCSV(jsonData), "prueba.csv", "text/csv");
+        // Ajax call to consume the JSON
+        $.ajax({
+          dataType: "json",
+          url: url,
+          data: data,
+          success: function(data){
+            console.log(data);
+            // Form csv
+            let fileContent = appUtils.JSONtoCSV(data);
+            // Create and download the file
+            appUtils.createAndDownloadFile(fileContent, "prueba.csv", "text/csv");
+          }
+        });
+
       }
+
+      
 
       /**
        * Optional ViewModel method invoked after the View is inserted into the
