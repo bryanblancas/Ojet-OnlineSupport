@@ -8,37 +8,55 @@
 /*
  * Your customer ViewModel code goes here
  */
-define(
-      ['accUtils',
-       'knockout',
-       'jquery',
-       'ojs/ojmodel',
-       'ojs/ojcollectiondataprovider',
-       'appUtils',
-      ],
+define([
+      'accUtils',
+      'knockout',
+      'jquery',
+      'ojs/ojmodel',
+      'ojs/ojcollectiondataprovider',
+      'appUtils',
+      'ojs/ojmessages'],
   function (accUtils, ko, $, Model, CollectionDataProvider, appUtils)   {
     function CustomerViewModel() {
       self = this;
-      // Below are a set of the ViewModel methods invoked by the oj-module component.
-      // Please reference the oj-module jsDoc for additional information.
-      var data = null;
-      var url = "http://localhost:8080/consumeJSON";
+
+      self.data = null;
+      self.url = "http://localhost:8080/consumeJSON";
+
+      self.applicationMessages = ko.observableArray([]);
+
+      // Ajax call to consume the JSON
+      $.ajax({
+          dataType: "json",
+          url: self.url,
+          data: self.data,
+          success: function(data){
+            self.applicationMessages.push(
+              {
+                severity: 'confirmation',
+                summary: 'JSON data fetched',
+                detail: 'Data for the file was succesfully downloaded'
+              }
+            )
+            self.data = data;
+          },
+          error: function(){
+            self.applicationMessages.push(
+              {
+                severity: 'error',
+                summary: 'Error consuming end point',
+                detail: 'Unable to get JSON data'
+              }
+            )
+          }
+        });
 
       // Event of the button
       self.onButtonPressed = function(){
-        // Ajax call to consume the JSON
-        $.ajax({
-          dataType: "json",
-          url: url,
-          data: data,
-          success: function(data){
-            console.log(data);
-            // Form csv
-            let fileContent = appUtils.JSONtoCSV(data);
-            // Create and download the file
-            appUtils.createAndDownloadFile(fileContent, "prueba.csv", "text/csv");
-          }
-        });
+        // Form csv
+        let fileContent = appUtils.JSONtoCSV(self.data);
+        // Create and download the file
+        appUtils.createAndDownloadFile(fileContent, "prueba.csv", "text/csv");
 
       }
 

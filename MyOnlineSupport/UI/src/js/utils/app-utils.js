@@ -8,6 +8,8 @@ define([
 
       // Function to get CSV from JSON
       self.JSONtoCSV = function(jsonData){
+        if(jsonData == null) return null;
+
         // specify how you want to handle null values here
         const replacer = (key, value) => value === null ? '' : value;
 
@@ -36,6 +38,9 @@ define([
 
       // Function to create and download a file with the given data 
       self.createAndDownloadFile = function(data, name, type){
+        if(data === '' || data == null) return null;
+        if(name === '' || name == null) name = 'file.txt';
+        if(type === '' || type == null) type = '';
         /******************************** 
          * Create the file object (blob)
         *********************************/
