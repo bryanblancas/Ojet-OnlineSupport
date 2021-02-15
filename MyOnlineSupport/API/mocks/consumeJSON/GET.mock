@@ -1,45 +1,5 @@
 HTTP/1.1 200 OK
-Content-Type: application/json
+Content-Type: application/json;
 
-[{
-    "id": 10005,
-    "title": "Account Upgrade",
-    "author": "Charlotte Illidge",
-    "authorImage": "image.jpg",
-    "representativeId": "2",
-    "priority": 3,
-    "service": "stylearchive",
-    "dateCreated": "2018-07-09T08:37:17+00:00",
-    "status": "Closed",
-    "message": "Hi, <br /><br />I would like to upgrade my account to the next tier, so that I can include custom HTML in my templates, thanks!",
-    "attachment": [],
-    "ticketRating": 4
-},
-{
-    "id": 10004,
-    "title": "Advertisements",
-    "author": "Charlotte Illidge",
-    "authorImage": "image.jpg",
-    "representativeId": "3",
-    "priority": 3,
-    "service": "stylearchive",
-    "dateCreated": "2018-06-25T14:54:17+00:00",
-    "status": "Closed",
-    "message": "Hi, <br /><br />I would like to include AdSense advertisements on my website, but I cannot seem to find a way to do this. <br /><br />Is this possible? <br /><br />Thanks.",
-    "attachment": [],
-    "ticketRating": 5
-},
-{
-    "id": 10003,
-    "title": "Data Migration",
-    "author": "Charlotte Illidge",
-    "authorImage": "image.jpg",
-    "representativeId": "4",
-    "priority": 3,
-    "service": "stylearchive",
-    "dateCreated": "2018-06-11T11:22:16+00:00",
-    "status": "Closed",
-    "message": "Hi, I need to transfer all my data from my old provider to you. <br /><br />I have a copy of the SQL dump. <br /><br />How do I import this? <br /><br />Thanks,<br /> Charlotte.",
-    "attachment": [],
-    "ticketRating": 4
-}]
+[{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.58%","val_measure_id":42236851,"date_all":"Jul 2020","metric_id":220,"kpi_version":1,"measure_01":0.58,"measure_sort":20200731,"kpi_trend":"UR","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Jul 2020","measure_date02":"7","measure_start_date_id":20200701,"fiscalYear":2021,"calendarYear":2020,"measureEndDate":"Jul 2020","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.24%","val_measure_id":42237132,"date_all":"Aug 2020","metric_id":220,"kpi_version":1,"measure_01":0.24,"measure_sort":20200831,"kpi_trend":"DG","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Aug 2020","measure_date02":"8","measure_start_date_id":20200801,"fiscalYear":2021,"calendarYear":2020,"measureEndDate":"Aug 2020","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.33%","val_measure_id":42237339,"date_all":"Sep 2020","metric_id":220,"kpi_version":1,"measure_01":0.33,"measure_sort":20200930,"kpi_trend":"UR","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Sep 2020","measure_date02":"9","measure_start_date_id":20200901,"fiscalYear":2021,"calendarYear":2020,"measureEndDate":"Sep 2020","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.24%","val_measure_id":43279534,"date_all":"Oct 2020","metric_id":220,"kpi_version":1,"measure_01":0.24,"measure_sort":20201031,"kpi_trend":"DG","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Oct 2020","measure_date02":"10","measure_start_date_id":20201001,"fiscalYear":2021,"calendarYear":2020,"measureEndDate":"Oct 2020","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.81%","val_measure_id":45635423,"date_all":"Nov 2020","metric_id":220,"kpi_version":1,"measure_01":0.81,"measure_sort":20201130,"kpi_trend":"UR","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Nov 2020","measure_date02":"11","measure_start_date_id":20201101,"fiscalYear":2021,"calendarYear":2020,"measureEndDate":"Nov 2020","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.68%","val_measure_id":48470056,"date_all":"Dec 2020","metric_id":220,"kpi_version":1,"measure_01":0.68,"measure_sort":20201231,"kpi_trend":"DG","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Dec 2020","measure_date02":"12","measure_start_date_id":20201201,"fiscalYear":2021,"calendarYear":2020,"measureEndDate":"Dec 2020","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.19%","val_measure_id":50351108,"date_all":"Jan 2021","metric_id":220,"kpi_version":1,"measure_01":0.19,"measure_sort":20210131,"kpi_trend":"DG","period_complete":1,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Jan 2021","measure_date02":"1","measure_start_date_id":20210101,"fiscalYear":2021,"calendarYear":2021,"measureEndDate":"Jan 2021","kpi_set_order":1},{"service_suite":"Fusion Applications","dim_level":2,"val_all":"   0.21%","val_measure_id":50732983,"date_all":"Feb 2021","metric_id":220,"kpi_version":1,"measure_01":0.21,"measure_sort":20210228,"period_complete":0,"service_model":"SaaS Fleet","service_dim_id":2340,"measure_date01":"Feb 2021","measure_date02":"2","measure_start_date_id":20210201,"fiscalYear":2021,"calendarYear":2021,"measureEndDate":"Feb 2021","kpi_set_order":1}]
+
