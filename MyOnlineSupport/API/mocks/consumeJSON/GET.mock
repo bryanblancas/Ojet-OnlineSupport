@@ -1,0 +1,45 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[{
+    "id": 10005,
+    "title": "Account Upgrade",
+    "author": "Charlotte Illidge",
+    "authorImage": "image.jpg",
+    "representativeId": "2",
+    "priority": 3,
+    "service": "stylearchive",
+    "dateCreated": "2018-07-09T08:37:17+00:00",
+    "status": "Closed",
+    "message": "Hi, <br /><br />I would like to upgrade my account to the next tier, so that I can include custom HTML in my templates, thanks!",
+    "attachment": [],
+    "ticketRating": 4
+},
+{
+    "id": 10004,
+    "title": "Advertisements",
+    "author": "Charlotte Illidge",
+    "authorImage": "image.jpg",
+    "representativeId": "3",
+    "priority": 3,
+    "service": "stylearchive",
+    "dateCreated": "2018-06-25T14:54:17+00:00",
+    "status": "Closed",
+    "message": "Hi, <br /><br />I would like to include AdSense advertisements on my website, but I cannot seem to find a way to do this. <br /><br />Is this possible? <br /><br />Thanks.",
+    "attachment": [],
+    "ticketRating": 5
+},
+{
+    "id": 10003,
+    "title": "Data Migration",
+    "author": "Charlotte Illidge",
+    "authorImage": "image.jpg",
+    "representativeId": "4",
+    "priority": 3,
+    "service": "stylearchive",
+    "dateCreated": "2018-06-11T11:22:16+00:00",
+    "status": "Closed",
+    "message": "Hi, I need to transfer all my data from my old provider to you. <br /><br />I have a copy of the SQL dump. <br /><br />How do I import this? <br /><br />Thanks,<br /> Charlotte.",
+    "attachment": [],
+    "ticketRating": 4
+}]
