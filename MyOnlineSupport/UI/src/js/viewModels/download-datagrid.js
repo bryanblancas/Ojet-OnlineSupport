@@ -17,6 +17,9 @@ define(
       self.KnockoutTemplateUtils = KnockoutTemplateUtils;
       var url = "http://localhost:8080/datagrid-demodata"
 
+
+
+
       // Get the collection
       var collection = new Model.Collection(null, {
         url: url
@@ -27,7 +30,9 @@ define(
         { rowHeader: 'EMPLOYEE_ID' }
       );
 
-      console.log(self.dataSource.data);
+      console.log(self.dataSource);
+
+
 
 
       self.getCellClassName = function (cellContext) {
@@ -47,13 +52,6 @@ define(
         }
         return '';
       };
-
-
-      Bootstrap.whenDocumentReady().then(
-          function () {
-            ko.applyBindings(new DownloadDataGridViewModel(), document.getElementById('myDataGrid'));
-          }
-      );
 
       /**
        * Optional ViewModel method invoked after the View is inserted into the
