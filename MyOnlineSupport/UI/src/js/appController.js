@@ -37,7 +37,8 @@ define(['knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockouttemplateutils',
         { path: 'ticket-desk', detail: { label: 'Ticket Desk', iconClass: 'oj-ux-ico-bar-chart' } },
         { path: 'my-example', detail: { label: 'My Example', iconClass: 'oj-ux-ico-fire' } },
         { path: 'customers', detail: { label: 'Customers', iconClass: 'oj-ux-ico-contact-group' } },
-        { path: 'about', detail: { label: 'About', iconClass: 'oj-ux-ico-information-s' } }
+        { path: 'about', detail: { label: 'About', iconClass: 'oj-ux-ico-information-s' } },
+        { path: 'download-datagrid', detail: { label: 'Data Grid', iconClass: 'oj-ux-ico-contact-group' } }
       ];
 
       // Router setup
