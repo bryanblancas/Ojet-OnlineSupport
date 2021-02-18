@@ -14,16 +14,15 @@ define(
 
       var url = "http://localhost:8080/datagrid-demodata"
 
-      self.dataSource = ko.observable();
-
       // Get the collection
       var collection = new Model.Collection(null, {
         url: url
       });
 
-      // self.dataSource = new CollectionDataGrid.CollectionDataGridDataSource(collection,
-      //   { rowHeader: 'EMPLOYEE_ID' }
-      // );
+      // Pass the collection into dataSource with type CollectionDataGridDataSource
+      self.dataSource = new CollectionDataGrid.CollectionDataGridDataSource(collection,
+        { rowHeader: 'EMPLOYEE_ID' }
+      );
 
 
       /**
