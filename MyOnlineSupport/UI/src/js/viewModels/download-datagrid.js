@@ -5,13 +5,15 @@ define(
     'jquery',
     'ojs/ojmodel',
     'ojs/ojcollectiondatagriddatasource',
+    'ojs/ojknockouttemplateutils',
     'ojs/ojdatagrid'
   ],
- function(accUtils, ko, $, Model, CollectionDataGrid) {
+ function(accUtils, ko, $, Model, CollectionDataGrid, KnockoutTemplateUtils) {
     function DownloadDataGridViewModel() {
 
       self = this;
 
+      self.KnockoutTemplateUtils = KnockoutTemplateUtils;
       var url = "http://localhost:8080/datagrid-demodata"
 
       // Get the collection

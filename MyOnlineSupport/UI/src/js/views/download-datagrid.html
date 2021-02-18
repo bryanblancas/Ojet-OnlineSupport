@@ -3,5 +3,48 @@
 <oj-data-grid 
 	id="myDataGrid"
 	aria-label="Bloody data grid"
-	data={{dataSource}}>
-</oj-data-grid>
+	data={{dataSource}}
+	header.column.renderer="[[KnockoutTemplateUtils.getRenderer('header_template')]]"
+></oj-data-grid>
+
+ <script type="text/html" id="header_template">
+  <oj-bind-if test="[[$context.key=='FIRST_NAME']]">
+      <span><oj-bind-text value="First Name"></oj-bind-text></span> 
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.key=='LAST_NAME']]">
+      <span><oj-bind-text value="Last Name"></oj-bind-text></span> 
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.key=='EMAIL']]">
+      <span><oj-bind-text value="Email Address"></oj-bind-text></span> 
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.key=='PHONE_NUMBER']]">
+      <span><oj-bind-text value="Phone #"></oj-bind-text></span> 
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.key=='HIRE_DATE']]">
+      <span><oj-bind-text value="Date Hired"></oj-bind-text></span> 
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.key=='SALARY']]">
+      <span><oj-bind-text value="Salary"></oj-bind-text></span> 
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.key=='DEPARTMENT_ID']]">
+      <span><oj-bind-text value="Department Id"></oj-bind-text></span> 
+  </oj-bind-if>
+</script>
+<script type="text/html" id="cell_template">
+  <oj-bind-if test="[[$context.keys.column=='FIRST_NAME' || $context.keys.column=='LAST_NAME' || 
+      $context.keys.column=='PHONE_NUMBER' || $context.keys.column=='DEPARTMENT_ID']]">
+      <span> <oj-bind-text value="[[$data]]"></oj-bind-text></span>
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.keys.column=='EMAIL']]">
+      <span>
+          <a href="#" on-click="[[$parent.handleClick]]">
+              <oj-bind-text value ="[[$context.data]]"></oj-bind-text></a>
+      </span>
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.keys.column=='HIRE_DATE']]">
+      <span> <oj-bind-text value="[[$parent.dateConverter.format($context.data)]]"></oj-bind-text></span>
+  </oj-bind-if>
+  <oj-bind-if test="[[$context.keys.column=='SALARY']]">
+      <span> <oj-bind-text value="[[$parent.salaryConverter.format($context.data)]]"></oj-bind-text></span>
+  </oj-bind-if>
+</script>
