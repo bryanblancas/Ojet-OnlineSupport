@@ -5,6 +5,9 @@
 	aria-label="Bloody data grid"
 	data={{dataSource}}
 	header.column.renderer="[[KnockoutTemplateUtils.getRenderer('header_template')]]"
+	header.column.class-name="[[getColumnHeaderClassName]]"
+	cell.renderer="[[KnockoutTemplateUtils.getRenderer('cell_template')]]"
+	cell.class-name="[[getCellClassName]]"
 ></oj-data-grid>
 
  <script type="text/html" id="header_template">
@@ -42,9 +45,9 @@
       </span>
   </oj-bind-if>
   <oj-bind-if test="[[$context.keys.column=='HIRE_DATE']]">
-      <span> <oj-bind-text value="[[$parent.dateConverter.format($context.data)]]"></oj-bind-text></span>
+      <span> <oj-bind-text value="[[$context.data]]"></oj-bind-text></span>
   </oj-bind-if>
   <oj-bind-if test="[[$context.keys.column=='SALARY']]">
-      <span> <oj-bind-text value="[[$parent.salaryConverter.format($context.data)]]"></oj-bind-text></span>
+      <span> <oj-bind-text value="[[$context.data]]"></oj-bind-text></span>
   </oj-bind-if>
 </script>

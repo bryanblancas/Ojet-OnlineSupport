@@ -6,9 +6,10 @@ define(
     'ojs/ojmodel',
     'ojs/ojcollectiondatagriddatasource',
     'ojs/ojknockouttemplateutils',
+    'ojs/ojbootstrap',
     'ojs/ojdatagrid'
   ],
- function(accUtils, ko, $, Model, CollectionDataGrid, KnockoutTemplateUtils) {
+ function(accUtils, ko, $, Model, CollectionDataGrid, KnockoutTemplateUtils, Bootstrap) {
     function DownloadDataGridViewModel() {
 
       self = this;
@@ -26,6 +27,33 @@ define(
         { rowHeader: 'EMPLOYEE_ID' }
       );
 
+      console.log(self.dataSource.data);
+
+
+      self.getCellClassName = function (cellContext) {
+        return getAlignmentClassNameFromKey(cellContext.keys.column);
+      };
+      self.getColumnHeaderClassName = function (headerContext) {
+        return getAlignmentClassNameFromKey(headerContext.key);
+      };
+      const getAlignmentClassNameFromKey = function (key) {
+        if (key === 'SALARY') {
+          return 'oj-helper-justify-content-right';
+        } else if (key === 'FIRST_NAME' ||
+                  key === 'LAST_NAME' ||
+                  key === 'EMAIL' ||
+                  key === 'HIRE_DATE') {
+          return 'oj-sm-justify-content-flex-start';
+        }
+        return '';
+      };
+
+
+      Bootstrap.whenDocumentReady().then(
+          function () {
+            ko.applyBindings(new DownloadDataGridViewModel(), document.getElementById('myDataGrid'));
+          }
+      );
 
       /**
        * Optional ViewModel method invoked after the View is inserted into the
