@@ -13,6 +13,11 @@
           		</strong>
     		</div>
 		</template>
+		<oj-menu slot="contextMenu" aria-label="Actions" on-oj-action="[[contextMenuAction]]">
+			<oj-option id="action1" value="Action 1">
+			  	<span slot = 'startIcon' class="fa fa-download"></span>Download CSV
+			</oj-option>
+		</oj-menu>      
 	</oj-list-view>
 </div>
 

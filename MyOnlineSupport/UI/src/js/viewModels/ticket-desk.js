@@ -5,7 +5,9 @@ define(['accUtils',
         'ojs/ojlabel',
         'ojs/ojselectsingle',
         'ojs/ojchart',
-        'ojs/ojlistview'
+        'ojs/ojlistview',
+        "ojs/ojmenu",
+        "ojs/ojoption"
        ],
   function(accUtils, ko, $,ArrayDataProvider) {
   
@@ -48,7 +50,16 @@ define(['accUtils',
       ];
       self.chartDataProvider = new ArrayDataProvider(chartData, { keyAttributes: 'id' });  
 
+      this.connected = () => {
+        
+      };
+
     }
+
+    contextMenuAction = (event) => {
+      console.log(event);
+    }
+    
     return TicketDeskViewModel;
   }
 );
