@@ -52,16 +52,26 @@ define(['accUtils',
       self.chartDataProvider = new ArrayDataProvider(chartData, { keyAttributes: 'id' });  
 
       self.contextMenuAction = (event) => {
-        // console.log(typeof event);
-        // console.log(event);
-        // console.log(event.srcElement);
-        var searchid = "#"+event.srcElement.value;
-        console.log(searchid);
-        var elem = $(searchid);//document.getElementById(searchid);
-        console.log(elem[0]);
-        // elem[0].innerHTML= "<td>Hello <b>World</b>!</td>";
-        console.log(elem[0].innerHTML);
-        AppUtils.createAndDownloadFile(elem[0].innerHTML, "prueba.txt");
+        // For this example, I want to know how many elements has the list in order to create a excel file
+        // Since the page only has one list, ID element is known and static (see past commits to dynamic ids)
+        var searchid = "#activitiesList";
+        var elem = $(searchid)[0];//document.getElementById(searchid);
+        
+        // Debug
+        // console.log(elem[0]);
+        console.log(elem.childNodes);
+
+        // In this case I know that the information of the list is in the child node UL, so look for it
+        var ul_element = elem.getElementsByTagName("ul")[0];
+
+        // Once in the ul element, I know that the information is inside li elements, so search for that
+        var content = "";
+        $(ul_element).find("li").each(function(){
+          content += this.textContent.replace(/[^a-zA-Z0-9]/g, "").replace("DownloadCSV", "") + ",";
+        });
+        console.log(content);
+
+        AppUtils.createAndDownloadFile(content, "prueba.csv", "text/csv");
       }
 
     }
