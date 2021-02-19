@@ -54,9 +54,10 @@ define(['accUtils',
         // console.log(typeof event);
         // console.log(event);
         // console.log(event.srcElement);
-        console.log(event.srcElement.value);
-        // var elem = $(document).find("#"+event.srcElement.value);
-        // console.log(elem);
+        var searchid = "#"+event.srcElement.value;
+        console.log(searchid);
+        var elem = $(searchid);
+        console.log(elem);
       }
 
     }

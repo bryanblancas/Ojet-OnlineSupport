@@ -8,13 +8,14 @@
 	selection-mode="single">
 		<template slot="itemTemplate">
 			<oj-label>
-		 	<div>
+		 	<div :id="[[$current.data.id]]">
           		<strong>
             	<oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
+				<oj-bind-text value="[[$current.data.id]]"></oj-bind-text>
           		</strong>
     		</div>
 			<oj-menu slot="contextMenu" aria-label="Actions" on-oj-action="[[contextMenuAction]]">
-				<oj-option id="action1" value="[[$current.data.name]]">
+				<oj-option id="action1" value="[[$current.data.id]]">
 					<span slot = 'startIcon' class="fa fa-download"></span>Download CSV
 				</oj-option>
 			</oj-menu> 
