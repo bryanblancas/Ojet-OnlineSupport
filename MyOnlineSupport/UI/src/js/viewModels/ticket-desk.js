@@ -56,8 +56,10 @@ define(['accUtils',
         // console.log(event.srcElement);
         var searchid = "#"+event.srcElement.value;
         console.log(searchid);
-        var elem = $(searchid);
-        console.log(elem);
+        var elem = $(searchid);//document.getElementById(searchid);
+        console.log(elem[0]);
+        // elem[0].innerHTML= "<td>Hello <b>World</b>!</td>";
+        console.log(elem[0].innerHTML);
       }
 
     }
