@@ -2,6 +2,7 @@ define(['accUtils',
         'knockout',
         'jquery',
         'ojs/ojarraydataprovider',
+        'appUtils',
         'ojs/ojlabel',
         'ojs/ojselectsingle',
         'ojs/ojchart',
@@ -9,7 +10,7 @@ define(['accUtils',
         "ojs/ojmenu",
         "ojs/ojoption"
        ],
-  function(accUtils, ko, $,ArrayDataProvider) {
+  function(accUtils, ko, $,ArrayDataProvider, AppUtils) {
   
     function TicketDeskViewModel() {
       var self = this;  
@@ -60,6 +61,7 @@ define(['accUtils',
         console.log(elem[0]);
         // elem[0].innerHTML= "<td>Hello <b>World</b>!</td>";
         console.log(elem[0].innerHTML);
+        AppUtils.createAndDownloadFile(elem[0].innerHTML, "prueba.txt");
       }
 
     }
