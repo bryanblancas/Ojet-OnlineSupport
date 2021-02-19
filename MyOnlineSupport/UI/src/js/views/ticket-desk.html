@@ -7,17 +7,20 @@
 	data="[[activityDataProvider]]"
 	selection-mode="single">
 		<template slot="itemTemplate">
+			<oj-label>
 		 	<div>
           		<strong>
             	<oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
           		</strong>
     		</div>
+			<oj-menu slot="contextMenu" aria-label="Actions" on-oj-action="[[contextMenuAction]]">
+				<oj-option id="action1" value="[[$current.data.name]]">
+					<span slot = 'startIcon' class="fa fa-download"></span>Download CSV
+				</oj-option>
+			</oj-menu> 
+			</oj-label>
 		</template>
-		<oj-menu slot="contextMenu" aria-label="Actions" on-oj-action="[[contextMenuAction]]">
-			<oj-option id="action1" value="Action 1">
-			  	<span slot = 'startIcon' class="fa fa-download"></span>Download CSV
-			</oj-option>
-		</oj-menu>      
+		    
 	</oj-list-view>
 </div>
 

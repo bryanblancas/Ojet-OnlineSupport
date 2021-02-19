@@ -50,16 +50,17 @@ define(['accUtils',
       ];
       self.chartDataProvider = new ArrayDataProvider(chartData, { keyAttributes: 'id' });  
 
-      this.connected = () => {
-        
-      };
+      self.contextMenuAction = (event) => {
+        // console.log(typeof event);
+        // console.log(event);
+        // console.log(event.srcElement);
+        console.log(event.srcElement.value);
+        // var elem = $(document).find("#"+event.srcElement.value);
+        // console.log(elem);
+      }
 
     }
 
-    contextMenuAction = (event) => {
-      console.log(event);
-    }
-    
     return TicketDeskViewModel;
   }
 );
