@@ -37,7 +37,6 @@ define(['accUtils',
       // chart selection observable and default value
       self.val = ko.observable("pie");
 
-
        // chart data array and  ArrayDataProvider observable
       var chartData = [
         { "id": 0, "series": "Baseball", "group": "Group A", "value": 42 },
@@ -74,7 +73,35 @@ define(['accUtils',
         AppUtils.createAndDownloadFile(content, "prueba.csv", "text/csv");
       }
 
+
+      // Simulate creating of HTML elements for each data received
+      chartData.forEach((ob, i) => {
+        var dummyElement = document.createElement("div");
+        dummyElement.setAttribute("id", i);
+        dummyElement.setAttribute("series", ob.series);
+        dummyElement.setAttribute("group", ob.group);
+        dummyElement.setAttribute("value", ob.value);
+        dummyElement.innerHTML = "PRUEBA "+ i;
+        document.body.appendChild(dummyElement);
+
+      });
+
+      this.connected = () => {
+        $("#0").click(function (context){
+          let msg = "Click 0 "+$(this).attr("series")+" "+$(this).attr("group")+" "+$(this).attr("value");
+          alert(msg);
+        });
+        $("#1").click(function (){
+          alert("click 1");
+        });
+        $("#2").click(function (){
+          alert("click 2");
+        });
+      };
+
     }
+
+   
 
     return TicketDeskViewModel;
   }
