@@ -87,12 +87,13 @@ define(['accUtils',
       });
 
       this.connected = () => {
-        $("#0").click(function (context){
+        $("#0").click(function (){
           let msg = "Click 0 "+$(this).attr("series")+" "+$(this).attr("group")+" "+$(this).attr("value");
           alert(msg);
         });
-        $("#1").click(function (){
-          alert("click 1");
+        $("#1").click(function (context){
+          let msg = $(context.currentTarget).attr("series");
+          alert(msg);
         });
         $("#2").click(function (){
           alert("click 2");
